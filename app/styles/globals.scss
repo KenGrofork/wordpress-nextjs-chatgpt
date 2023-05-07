@@ -9,7 +9,7 @@
   --black: rgb(48, 48, 48);
   --gray: rgb(250, 250, 250);
   --primary: rgb(29, 147, 171);
-  --second: rgb(231, 248, 255);
+  --second: #dee4e7;
   --hover-color: #f3f3f3;
   --bar-color: rgba(0, 0, 0, 0.1);
   --theme-color: var(--gray);
@@ -26,11 +26,11 @@
   --theme: dark;
 
   /* color */
-  --white: rgb(30, 30, 30);
-  --black: rgb(187, 187, 187);
+  --white: rgb(0, 15, 23);
+  --black: rgb(255, 255, 255);
   --gray: rgb(21, 21, 21);
-  --primary: rgb(29, 147, 171);
-  --second: rgb(27 38 42);
+  --primary: rgb(14, 116, 136);
+  --second: rgb(0, 0, 0);
   --hover-color: #323232;
 
   --bar-color: rgba(255, 255, 255, 0.1);
@@ -166,7 +166,7 @@ input[type="checkbox"]:checked::after {
   display: inline-block;
   width: 8px;
   height: 8px;
-  background-color: var(--primary);
+  background-color: rgb(22, 69, 79);
   content: " ";
   border-radius: 2px;
 }
@@ -181,7 +181,7 @@ input[type="range"] {
   appearance: none;
   height: 8px;
   width: 20px;
-  background-color: var(--primary);
+  background-color: rgb(22, 69, 79);
   border-radius: 10px;
   cursor: pointer;
   transition: all ease 0.3s;

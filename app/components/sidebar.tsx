@@ -9,7 +9,8 @@ import ChatGptIcon from "../icons/chatgpt.svg";
 import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
-import PluginIcon from "../icons/plugin.svg";
+import ChatGptIcon1 from "../icons/ChatGptIcon1.ico";
+// import PluginIcon from "../icons/plugin.svg";
 
 import Locale from "../locales";
 
@@ -96,9 +97,18 @@ export function SideBar(props: { className?: string }) {
       }`}
     >
       <div className={styles["sidebar-header"]}>
-        <div className={styles["sidebar-title"]}>ChatGPT Next</div>
+        <div className={styles["site-logo"]}>
+          <a href="https://aichat.funny-code.top/">
+            <img
+              src={ChatGptIcon1.src}
+              alt="ChatGptIcon1"
+              className={styles["site-logo1"]}
+            />
+          </a>
+        </div>
+        <div className={styles["sidebar-title"]}>AIChat</div>
         <div className={styles["sidebar-sub-title"]}>
-          Build your own AI assistant.
+          国内能用的ChatGPT，目前接入gpt3.5.
         </div>
         <div className={styles["sidebar-logo"] + " no-dark"}>
           <ChatGptIcon />
@@ -113,13 +123,13 @@ export function SideBar(props: { className?: string }) {
           onClick={() => navigate(Path.NewChat, { state: { fromHome: true } })}
           shadow
         />
-        <IconButton
+        {/* <IconButton
           icon={<PluginIcon />}
           text={shouldNarrow ? undefined : Locale.Plugin.Name}
           className={styles["sidebar-bar-button"]}
           onClick={() => showToast(Locale.WIP)}
           shadow
-        />
+        /> */}
       </div>
 
       <div
@@ -150,11 +160,11 @@ export function SideBar(props: { className?: string }) {
               <IconButton icon={<SettingsIcon />} shadow />
             </Link>
           </div>
-          <div className={styles["sidebar-action"]}>
+          {/* <div className={styles["sidebar-action"]}>
             <a href={REPO_URL} target="_blank">
               <IconButton icon={<GithubIcon />} shadow />
             </a>
-          </div>
+          </div> */}
         </div>
         <div>
           <IconButton

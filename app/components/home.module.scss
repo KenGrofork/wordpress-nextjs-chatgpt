@@ -120,7 +120,12 @@
     display: block;
   }
 }
-
+.site-logo{
+  text-align: center;
+}
+.site-logo1{
+  width: 40%;
+}
 .sidebar-header {
   position: relative;
   padding-top: 20px;
@@ -539,7 +544,7 @@
 }
 
 .chat-input-send {
-  background-color: var(--primary);
+  background-color: rgb(38, 79, 87);
   color: white;
 
   position: absolute;
