@@ -98,13 +98,11 @@ export function SideBar(props: { className?: string }) {
     >
       <div className={styles["sidebar-header"]}>
         <div className={styles["site-logo"]}>
-          <a href="https://aichat.funny-code.top/">
-            <img
-              src={ChatGptIcon1.src}
-              alt="ChatGptIcon1"
-              className={styles["site-logo1"]}
-            />
-          </a>
+          <img
+            src={ChatGptIcon1.src}
+            alt="ChatGptIcon1"
+            className={styles["site-logo1"]}
+          />
         </div>
         {/* <div className={styles["sidebar-title"]}>AIChat</div> */}
         <div className={styles["sidebar-sub-title"]}>
