@@ -53,19 +53,19 @@ const ENABLE_GPT4 = false;
 
 export const ALL_MODELS = [
   {
-    name: "gpt-4（开发中，尽情期待）",
+    name: "gpt-4（开发中）",
     available: ENABLE_GPT4,
   },
   {
-    name: "gpt-4-0314（开发中，尽情期待）",
+    name: "gpt-4-0314（开发中）",
     available: ENABLE_GPT4,
   },
   {
-    name: "gpt-4-32k（开发中，尽情期待）",
+    name: "gpt-4-32k（开发中）",
     available: ENABLE_GPT4,
   },
   {
-    name: "gpt-4-32k-0314（开发中，尽情期待）",
+    name: "gpt-4-32k-0314（开发中）",
     available: ENABLE_GPT4,
   },
   {
