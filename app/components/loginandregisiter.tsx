@@ -9,16 +9,16 @@ function Login() {
   const [showError, setShowError] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 添加登录状态
 
-  const handleUsernameChange = (event) => {
+  const handleUsernameChange = (event: any) => {
     setUsername(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: any) => {
     setPassword(event.target.value);
   };
 
   // 验证用户身份
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
       const response = await axios.post(
