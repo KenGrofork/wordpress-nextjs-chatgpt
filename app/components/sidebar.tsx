@@ -10,7 +10,6 @@ import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
 import ChatGptIcon1 from "../icons/ChatGptIcon1.ico";
-import LoginPopup from "./login";
 // import LoginButton from "./loginbutton";
 // import { Button } from "antd";
 // import 'antd/dist/reset.css';
@@ -173,7 +172,6 @@ export function SideBar(props: { className?: string }) {
               <IconButton icon={<GithubIcon />} shadow />
             </a>
           </div> */}
-          <LoginPopup />
         </div>
         <div>
           <IconButton
