@@ -13,6 +13,8 @@ import { Mask, useMaskStore } from "../store/mask";
 import Locale from "../locales";
 import { useAppConfig, useChatStore } from "../store";
 import { MaskAvatar } from "./mask";
+import React, { Fragment } from "react";
+import ChatGptIcon1 from "../icons/ChatGptIcon1.ico";
 
 function getIntersectionArea(aRect: DOMRect, bRect: DOMRect) {
   const xmin = Math.max(aRect.x, bRect.x);
@@ -39,7 +41,7 @@ function MaskItem(props: { mask: Mask; onClick?: () => void }) {
       const intersectionArea = getIntersectionArea(domRect, parentRect);
       const domArea = domRect.width * domRect.height;
       const ratio = intersectionArea / domArea;
-      const opacity = ratio > 0.9 ? 1 : 0.4;
+      const opacity = ratio > 0.9 ? 1 : 1;
       dom.style.opacity = opacity.toString();
     };
 
@@ -52,7 +54,12 @@ function MaskItem(props: { mask: Mask; onClick?: () => void }) {
 
   return (
     <div className={styles["mask"]} ref={domRef} onClick={props.onClick}>
-      <MaskAvatar mask={props.mask} />
+      <img
+        src={ChatGptIcon1.src}
+        alt="ChatGptIcon1"
+        className={styles["site-logo1"]}
+      />
+      {/* <MaskAvatar mask={props.mask} /> */}
       <div className={styles["mask-name"] + " one-line"}>{props.mask.name}</div>
     </div>
   );
@@ -75,8 +82,10 @@ function useMaskGroup(masks: Mask[]) {
     let maskIndex = 0;
     const nextMask = () => masks[maskIndex++ % masks.length];
 
-    const rows = Math.ceil(maxHeight / maskItemHeight);
-    const cols = Math.ceil(maxWidth / maskItemWidth);
+    // const rows = Math.ceil(maxHeight / maskItemHeight);
+    const rows = 1;
+    // const cols = Math.ceil(maxWidth / maskItemWidth);
+    const cols = 12;
 
     const newGroups = new Array(rows)
       .fill(0)

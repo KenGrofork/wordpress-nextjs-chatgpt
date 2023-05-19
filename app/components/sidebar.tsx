@@ -10,6 +10,10 @@ import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
 import ChatGptIcon1 from "../icons/ChatGptIcon1.ico";
+import LoginPopup from "./login";
+// import LoginButton from "./loginbutton";
+// import { Button } from "antd";
+// import 'antd/dist/reset.css';
 // import PluginIcon from "../icons/plugin.svg";
 
 import Locale from "../locales";
@@ -24,7 +28,7 @@ import {
   REPO_URL,
 } from "../constant";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useMobileScreen } from "../utils";
 import dynamic from "next/dynamic";
 import { showToast } from "./ui-lib";
@@ -139,6 +143,12 @@ export function SideBar(props: { className?: string }) {
         }}
       >
         <ChatList narrow={shouldNarrow} />
+        <NavLink to={Path.Login}>
+          <span>login</span>
+        </NavLink>
+        <NavLink to={Path.UserCenter}>
+          <span>用户中心</span>
+        </NavLink>
       </div>
 
       <div className={styles["sidebar-tail"]}>
@@ -163,6 +173,7 @@ export function SideBar(props: { className?: string }) {
               <IconButton icon={<GithubIcon />} shadow />
             </a>
           </div> */}
+          <LoginPopup />
         </div>
         <div>
           <IconButton
