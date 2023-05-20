@@ -23,10 +23,10 @@ function Login() {
         password,
       };
       const response: AxiosResponse<any> = await axios.post(
-        `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/api/v1/token`,
+        `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/jwt-auth/v1/token`,
         postData,
       );
-      localStorage.setItem("jwt_token", response.data.jwt_token);
+      localStorage.setItem("jwt_token", response.data.token);
     } catch (error: unknown) {
       if ((error as AxiosError).response?.status === 400) {
         setError("用户名或密码错误");
