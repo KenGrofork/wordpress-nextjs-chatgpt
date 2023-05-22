@@ -13,7 +13,11 @@
     "proxy-dev": "sh ./scripts/init-proxy.sh && proxychains -f ./scripts/proxychains.conf yarn dev"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "@hello-pangea/dnd": "^16.2.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.1",
     "@svgr/webpack": "^6.5.1",
     "@vercel/analytics": "^0.1.11",
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
@@ -37,6 +41,7 @@
     "remark-math": "^5.1.1",
     "sass": "^1.59.2",
     "spark-md5": "^3.0.2",
+    "tencentcloud-sdk-nodejs": "^4.0.602",
     "use-debounce": "^9.0.3",
     "zustand": "^4.3.6"
   },

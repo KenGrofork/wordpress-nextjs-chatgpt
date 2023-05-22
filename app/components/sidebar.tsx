@@ -10,6 +10,7 @@ import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
 import ChatGptIcon1 from "../icons/ChatGptIcon1.ico";
+import BasicList from "./sidebarlist";
 // import LoginButton from "./loginbutton";
 // import { Button } from "antd";
 // import 'antd/dist/reset.css';
@@ -142,14 +143,10 @@ export function SideBar(props: { className?: string }) {
         }}
       >
         <ChatList narrow={shouldNarrow} />
-        <NavLink to={Path.Login}>
-          <span>login</span>
-        </NavLink>
-        <NavLink to={Path.UserCenter}>
-          <span>用户中心</span>
-        </NavLink>
       </div>
-
+      <div>
+        <BasicList />
+      </div>
       <div className={styles["sidebar-tail"]}>
         <div className={styles["sidebar-actions"]}>
           <div className={styles["sidebar-action"] + " " + styles.mobile}>
@@ -189,7 +186,6 @@ export function SideBar(props: { className?: string }) {
           />
         </div>
       </div>
-
       <div
         className={styles["sidebar-drag"]}
         onMouseDown={(e) => onDragMouseDown(e as any)}

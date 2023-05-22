@@ -15,6 +15,7 @@ export enum Path {
   Masks = "/masks",
   Login = "/loginandregisiter",
   UserCenter = "/usercenter",
+  SiunUp = "/signup",
 }
 
 export enum SlotID {
