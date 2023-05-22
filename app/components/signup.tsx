@@ -18,6 +18,8 @@ import MySnackbar from "./mysnackbar";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+import { useNavigate } from "react-router-dom";
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -112,6 +114,7 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const [code, setCode] = useState("");
 
   const handleSubmit = async (event: any) => {
@@ -166,6 +169,9 @@ export default function SignUp() {
           setOpen(true);
           setMessage("注册成功");
           setSeverity("success");
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
         } else {
           setOpen(true);
           setMessage(tokenResponse.data.message);
