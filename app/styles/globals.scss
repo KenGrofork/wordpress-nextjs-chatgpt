@@ -219,8 +219,8 @@ input[type="range"]::-ms-thumb:hover {
 }
 
 input[type="number"],
-input[type="text"]:not(#email):not(#password):not(#outlined-adornment-password),
-input[type="password"]:not(#email):not(#password):not(#outlined-adornment-password) {
+input[type="text"]:not(#email):not(#password):not(#outlined-adornment-password):not(#code),
+input[type="password"]:not(#email):not(#password):not(#outlined-adornment-password):not(#code) {
   appearance: none;
   border-radius: 10px;
   border: var(--border-in-light);
