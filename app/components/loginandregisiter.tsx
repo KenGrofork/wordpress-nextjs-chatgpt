@@ -109,7 +109,7 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            登录
           </Typography>
           <Box
             component="form"
