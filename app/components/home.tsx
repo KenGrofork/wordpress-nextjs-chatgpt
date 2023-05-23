@@ -58,6 +58,12 @@ const Login = dynamic(
     loading: () => <Loading noLogo />,
   },
 );
+const Pricing = dynamic(
+  async () => (await import("./menbershipsplan")).default,
+  {
+    loading: () => <Loading noLogo />,
+  },
+);
 
 const UserCenter = dynamic(async () => (await import("./usercenter")).default, {
   loading: () => <Loading noLogo />,
@@ -136,6 +142,7 @@ function Screen() {
           <Route path={Path.Login} element={<Login />} />
           <Route path={Path.UserCenter} element={<UserCenter />} />
           <Route path={Path.SiunUp} element={<SignUp />} />
+          <Route path={Path.Pricing} element={<Pricing />} />
           {/* <Route path={Path.Login} element={<Login />} /> */}
         </Routes>
       </div>

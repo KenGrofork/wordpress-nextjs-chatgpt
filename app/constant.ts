@@ -16,6 +16,7 @@ export enum Path {
   Login = "/loginandregisiter",
   UserCenter = "/usercenter",
   SiunUp = "/signup",
+  Pricing = "/pricing",
 }
 
 export enum SlotID {

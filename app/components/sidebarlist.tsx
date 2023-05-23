@@ -104,6 +104,14 @@ export default function BasicList() {
               </ListItemButton>
             </ListItem>
           )}
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={Path.Pricing}>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary="开通会员" />
+            </ListItemButton>
+          </ListItem>
         </List>
       </nav>
     </Box>
