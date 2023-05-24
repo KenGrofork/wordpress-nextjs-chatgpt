@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   CardContent,
+  Box,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ import CloseIcon from "../icons/close.svg";
 import { IconButton } from "./button";
 import axios from "axios";
 import QRCodeDialog from "./payment";
+import { CircularProgress } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -65,97 +67,12 @@ const membershipOptions = [
     lenth: "年",
   },
 ];
-
-// function Pricing() {
-//     const navigate = useNavigate();
-//     const [open, setOpen] = React.useState(false);
-//     const [imageURL, setImageURL] = React.useState("");
-//     const handleClickOpen = () => {
-//         setOpen(true);
-//         setImageURL("https://api.xunhupay.com/payments/wechat/qrcode?id=20232100405&nonce_str=4936118325&time=1684935213&appid=201906155700&hash=889ef4f9ad88850e980f0ab3496e73d8");
-//     };
-//     const handleClose = () => {
-//         setOpen(false);
-//     };
-//     // 调用https://chatgpt.funny-code.top/wp-json/wc/v3/orders端口，使用woocommerce restAPI创建一个订单
-//     const handleSubmit = async (e: React.FormEvent) => {
-//         e.preventDefault();
-//         const target = e.target as HTMLFormElement;
-//         const formData = new FormData(target);
-//         const productId = formData.get("product_id");
-//         const config = {
-//             headers: {
-//                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_JWT_TOKEN}`,
-//             },
-
-//         };
-//         const data = {
-//             payment_method: "bacs",
-//             payment_method_title: "Direct Bank Transfer",
-//             set_paid: true,
-//             billing: {
-//                 first_name: "John",
-//                 last_name: "Doe",
-//                 address_1: "969 Market",
-//                 address_2: "",
-//                 city: "San Francisco",
-//                 state: "CA",
-//                 postcode: "94103",
-//                 country: "US",
-//                 email: "evanrobertsca@gmail.com",
-//             },
-//             shipping: {},
-//             line_items: [
-//                 {
-//                     product_id: productId,
-//                     quantity: 1,
-//                 },
-//             ],
-//             shipping_lines: [
-//                 {
-//                     method_id: "flat_rate",
-//                     method_title: "Flat Rate",
-//                     total: "0",
-//                 },
-//             ],
-//         };
-//         // const [orderId, setOrderId] = React.useState('');
-//         try {
-//             const response = await axios.post(
-//                 `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wc/v3/orders`,
-//                 data,
-//                 config
-//             );
-//             console.log(response.data);
-//             // setOrderId(response.data.id);
-//             // console.log(orderId);
-//         } catch (error) {
-//             console.error(error);
-//         }
-
-//         //如果上方接口调用成功，则调用下方接口生成二维码
-//         //增加条件判断，如果上方的try执行成功，则执行下方的try
-
-//         // const getpaymentimg = await axios.post(
-//         //     `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/my-plugin/v1/xunhupay`,
-//         //     {
-//         //         trade_order_id: orderId,
-//         //         payment: 'wechat',
-//         //         total_fee: '1',
-//         //         title: '周会员'
-//         //     },
-//         // );
-//         // console.log(getpaymentimg.data);
-//         // const qrcode = getpaymentimg.data.qrcode;
-//         // console.log(qrcode);
-//         // setImageURL(qrcode);
-//         // setOpen(true);
-//     };
 function Pricing() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [imageURL, setImageURL] = React.useState("");
-  // const [orderId, setOrderId] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
     setImageURL(
@@ -168,9 +85,16 @@ function Pricing() {
   // 调用https://chatgpt.funny-code.top/wp-json/wc/v3/orders端口，使用woocommerce restAPI创建一个订单
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const target = e.target as HTMLFormElement;
     const formData = new FormData(target);
     const productId = formData.get("product_id");
+    const selectedOption = membershipOptions.find(
+      (option) => option.id === parseInt(productId?.toString() ?? ""),
+    );
+    const productTitle = selectedOption?.title;
+    const productPrice = selectedOption?.price;
+    console.log(productId, productTitle, productPrice);
     const config = {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_JWT_TOKEN}`,
@@ -223,8 +147,8 @@ function Pricing() {
             {
               trade_order_id: orderId,
               payment: "wechat",
-              total_fee: "1",
-              title: "周会员",
+              total_fee: productPrice,
+              title: productTitle,
             },
           );
           console.log(getpaymentimg.data);
@@ -235,34 +159,11 @@ function Pricing() {
         } catch (error) {
           console.error(error);
         }
+        setLoading(false);
       }
     } catch (error) {
       console.error(error);
-      // setOrderId('');
     }
-
-    // if (orderId) {
-    //     try {
-    //         const getpaymentimg = await axios.post(
-    //             `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/my-plugin/v1/xunhupay`,
-    //             {
-    //                 trade_order_id: orderId,
-    //                 payment: 'wechat',
-    //                 total_fee: '1',
-    //                 title: '周会员'
-    //             },
-    //         );
-    //         console.log(getpaymentimg.data);
-    //         const qrcode = JSON.parse(getpaymentimg.data);
-    //         console.log(qrcode);
-    //         setImageURL(qrcode.url_qrcode);
-    //         setOpen(true);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // } else {
-    //     console.error('暂无订单');// 订单 ID 不存在，可以执行其他的逻辑或提示用户出错了
-    // }
   };
 
   return (
@@ -336,7 +237,6 @@ function Pricing() {
                         }
                         fullWidth
                         type="submit"
-                        // onClick={handleClickOpen}
                       >
                         {option.buttonText}
                       </Button>
@@ -352,6 +252,27 @@ function Pricing() {
             );
           })}
         </Grid>
+        {loading && (
+          <Box
+            sx={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 9999,
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress color="success" />
+            {/* <Typography variant="h5" sx={{ mb: 2 }}>
+                            二维码生成中，请稍等...
+                        </Typography> */}
+          </Box>
+        )}
         <QRCodeDialog
           open={open}
           handleClose={handleClose}
