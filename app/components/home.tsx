@@ -143,7 +143,6 @@ function Screen() {
           <Route path={Path.UserCenter} element={<UserCenter />} />
           <Route path={Path.SiunUp} element={<SignUp />} />
           <Route path={Path.Pricing} element={<Pricing />} />
-          {/* <Route path={Path.Login} element={<Login />} /> */}
         </Routes>
       </div>
     </div>

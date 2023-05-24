@@ -47,7 +47,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
-import path from "path";
 import { Path } from "../constant";
 import { Link } from "react-router-dom";
 import axios from "axios";

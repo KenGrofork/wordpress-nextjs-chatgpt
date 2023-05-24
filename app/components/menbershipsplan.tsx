@@ -16,6 +16,10 @@ import { IconButton } from "./button";
 import axios from "axios";
 import QRCodeDialog from "./payment";
 import { CircularProgress } from "@mui/material";
+import Wechat from "./wechat";
+import Alipay from "./alipay";
+import Divider from "@mui/material/Divider";
+import PaymentIcon from "@mui/icons-material/Payment";
 
 const theme = createTheme({
   palette: {
@@ -25,6 +29,12 @@ const theme = createTheme({
     secondary: {
       main: "#f48fb1",
     },
+  },
+  typography: {
+    fontFamily: "SF Pro SC",
+    fontSize: 12,
+    fontWeightRegular: 400,
+    fontWeightBold: 600,
   },
 });
 
@@ -73,27 +83,26 @@ function Pricing() {
   const [imageURL, setImageURL] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-    setImageURL(
-      "https://api.xunhupay.com/payments/wechat/qrcode?id=20232100405&nonce_str=4936118325&time=1684935213&appid=201906155700&hash=889ef4f9ad88850e980f0ab3496e73d8",
-    );
-  };
+  // const handleClickOpen = () => {
+  //     setOpen(true);
+  //     setImageURL(
+  //         "https://api.xunhupay.com/payments/wechat/qrcode?id=20232100405&nonce_str=4936118325&time=1684935213&appid=201906155700&hash=889ef4f9ad88850e980f0ab3496e73d8",
+  //     );
+  // };
   const handleClose = () => {
     setOpen(false);
   };
+  const [SelectedPaymentMethod, setSelectedPaymentMethod] =
+    React.useState("wechat");
+  const [selectedMembershipOption, setSelectedMembershipOption] =
+    React.useState(0);
+
   // 调用https://chatgpt.funny-code.top/wp-json/wc/v3/orders端口，使用woocommerce restAPI创建一个订单
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
-    const target = e.target as HTMLFormElement;
-    const formData = new FormData(target);
-    const productId = formData.get("product_id");
-    const selectedOption = membershipOptions.find(
-      (option) => option.id === parseInt(productId?.toString() ?? ""),
-    );
-    const productTitle = selectedOption?.title;
-    const productPrice = selectedOption?.price;
+    const productId = membershipOptions[selectedMembershipOption].id;
+    const productTitle = membershipOptions[selectedMembershipOption].title;
+    const productPrice = membershipOptions[selectedMembershipOption].price;
     console.log(productId, productTitle, productPrice);
     const config = {
       headers: {
@@ -146,7 +155,7 @@ function Pricing() {
             `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/my-plugin/v1/xunhupay`,
             {
               trade_order_id: orderId,
-              payment: "wechat",
+              payment: SelectedPaymentMethod,
               total_fee: productPrice,
               title: productTitle,
             },
@@ -187,71 +196,170 @@ function Pricing() {
         maxWidth="lg"
         sx={{ mt: 4, minHeight: "100vh", overflow: "auto" }}
       >
-        <Typography variant="h4" align="center" sx={{ mb: 6 }}>
+        <Typography variant="h6" align="left" sx={{ mb: 3 }}>
           选择一个会员加入我们
         </Typography>
         <Grid
           container
-          spacing={4}
-          alignItems="center"
-          justifyContent="center"
-          sx={{ mb: 6 }}
+          spacing={1}
+          alignItems="left"
+          justifyContent="left"
+          sx={{ mb: 3 }}
         >
           {membershipOptions.map((option, index) => {
             const key = `membershipOption_${index}`;
             return (
-              <Grid item xs={12} sm={6} md={6} lg={3} key={key}>
+              <Grid item xs={6} sm={3} md={3} lg={3} key={key}>
                 <Card
                   sx={{
-                    boxShadow: "0px 5px 20px rgba(0, 0, 0, 0.2)",
+                    boxShadow: "0px 0px 2px 0px rgba(0, 0, 0, 0.4)",
                     borderRadius: "5px",
+                    cursor: "pointer",
+                    border:
+                      selectedMembershipOption === index
+                        ? "1px solid #000"
+                        : "",
                   }}
-                  key={key}
+                  onClick={() => setSelectedMembershipOption(index)}
                 >
                   <CardContent
                     sx={{
-                      backgroundColor: index === 3 ? "#f48fb1" : "",
-                      color: index === 3 ? "#fff" : "",
+                      color:
+                        selectedMembershipOption === index ? "#f48fb1" : "",
                     }}
                   >
-                    <Typography variant="h6" align="center" sx={{ mb: 2 }}>
+                    <Typography
+                      variant="subtitle2"
+                      align="center"
+                      sx={{ mb: 1 }}
+                    >
                       {option.title}
                     </Typography>
-                    <Typography variant="h5" align="center" sx={{ mb: 4 }}>
+                    <Typography
+                      variant="subtitle1"
+                      align="center"
+                      sx={{ mb: 1 }}
+                    >
                       {option.price ? `¥${option.price}` : `Contact`}
                       <span>/{option.lenth}</span>
                     </Typography>
-                    <Typography variant="body2" align="center" sx={{ mb: 4 }}>
-                      {option.description}
-                    </Typography>
-                    <form onSubmit={handleSubmit}>
-                      <Button
-                        variant={index === 1 ? "contained" : "outlined"}
-                        color={
-                          option.buttonColor as
-                            | "primary"
-                            | "secondary"
-                            | "error"
-                            | "warning"
-                            | "info"
-                        }
-                        fullWidth
-                        type="submit"
-                      >
-                        {option.buttonText}
-                      </Button>
-                      <input
-                        type="hidden"
-                        name="product_id"
-                        value={option.id}
-                      />
-                    </form>
                   </CardContent>
                 </Card>
               </Grid>
             );
           })}
         </Grid>
+        <Divider sx={{ mb: 3 }} />
+        <Typography variant="h6" align="left" sx={{ mb: 2 }}>
+          选择支付方式
+        </Typography>
+        <Grid
+          container
+          spacing={1}
+          alignItems="left"
+          justifyContent="left"
+          sx={{ mb: 3 }}
+        >
+          <Grid item xs={6} sm={3} md={3} lg={3}>
+            <Card
+              sx={{
+                boxShadow: "0px 0px 2px 0px rgba(0, 0, 0, 0.4)",
+                borderRadius: "5px",
+                cursor: "pointer",
+                border:
+                  SelectedPaymentMethod === "wechat" ? "1px solid #000" : "",
+              }}
+              onClick={() => setSelectedPaymentMethod("wechat")}
+            >
+              <CardContent
+                sx={
+                  {
+                    // backgroundColor: SelectedPaymentMethod === "wechat" ? "#f48fb1" : "",
+                    // color: SelectedPaymentMethod === "wechat" ? "#fff" : "",
+                  }
+                }
+              >
+                <Grid
+                  container
+                  alignItems="center"
+                  spacing={0}
+                  sx={{ padding: 0 }}
+                  justifyContent="center"
+                >
+                  <Grid item sx={{ mr: 2 }}>
+                    <Wechat />
+                  </Grid>
+                  <Typography variant="h6" align="center" sx={{ mb: 0 }}>
+                    微信支付
+                  </Typography>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={3} md={3} lg={3}>
+            <Card
+              sx={{
+                boxShadow: "0px 0px 2px 0px rgba(0, 0, 0, 0.4)",
+                borderRadius: "5px",
+                cursor: "pointer",
+                border:
+                  SelectedPaymentMethod === "alipay" ? "1px solid #000" : "",
+              }}
+              onClick={() => setSelectedPaymentMethod("alipay")}
+            >
+              <CardContent
+                sx={
+                  {
+                    // backgroundColor: SelectedPaymentMethod === "alipay" ? "#f48fb1" : "",
+                    // color: SelectedPaymentMethod === "alipay" ? "#fff" : "",
+                  }
+                }
+              >
+                <Grid
+                  container
+                  alignItems="center"
+                  spacing={0}
+                  sx={{ padding: 0 }}
+                  justifyContent="center"
+                >
+                  <Grid item sx={{ mr: 2 }}>
+                    <Alipay />
+                  </Grid>
+                  <Typography variant="h6" align="center" sx={{ mb: 0 }}>
+                    支付宝支付
+                  </Typography>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+        <Grid item xs={6} sx={{ mb: 3 }}>
+          <Grid container justifyContent="right">
+            <Grid container justifyContent="right">
+              <Typography variant="h6" align="right" sx={{ mb: 1, mt: 1 }}>
+                订单合计：{membershipOptions[selectedMembershipOption].price}元
+              </Typography>
+            </Grid>
+            <Grid container justifyContent="right">
+              <Typography variant="inherit" align="right" sx={{ mb: 1, mt: 0 }}>
+                当前选择：{membershipOptions[selectedMembershipOption].title}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                size="large"
+                color="primary"
+                variant="contained"
+                startIcon={<PaymentIcon />}
+                onClick={handleSubmit}
+              >
+                去支付
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Divider sx={{ mb: 3 }} />
+
         {loading && (
           <Box
             sx={{
@@ -279,7 +387,7 @@ function Pricing() {
           imageURL={imageURL}
         />
         <Typography variant="h4" align="center" sx={{ mb: 6, mt: 6 }}>
-          Membership Benefits
+          为什么选择我们？
         </Typography>
         <Grid container spacing={4} alignItems="center" justifyContent="center">
           <Grid item xs={12} sm={6} md={4}>
@@ -291,10 +399,10 @@ function Pricing() {
             >
               <CardContent>
                 <Typography variant="h5" sx={{ mb: 2 }}>
-                  Unlimited Access
+                  会员说明
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 4 }}>
-                  Access to all of our courses, no limits
+                  所有会员均使用相同api接口，区别在于使用时长.
                 </Typography>
               </CardContent>
             </Card>
@@ -308,10 +416,10 @@ function Pricing() {
             >
               <CardContent>
                 <Typography variant="h5" sx={{ mb: 2 }}>
-                  Expert Instructors
+                  为什么要收费
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 4 }}>
-                  Our instructors are experts in their fields
+                  api接口需要服务器支持，服务器需要成本，所以需要收费.
                 </Typography>
               </CardContent>
             </Card>
@@ -325,10 +433,10 @@ function Pricing() {
             >
               <CardContent>
                 <Typography variant="h5" sx={{ mb: 2 }}>
-                  Personalized Learning
+                  售后稳定吗，会不会跑路
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 4 }}>
-                  Custom recommendations and learning plans
+                  自从openai推出接口，我们就开始做这个了，一直在做，不会跑路.
                 </Typography>
               </CardContent>
             </Card>

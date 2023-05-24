@@ -13,15 +13,19 @@
     "proxy-dev": "sh ./scripts/init-proxy.sh && proxychains -f ./scripts/proxychains.conf yarn dev"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.1.2",
     "@apollo/client": "^3.7.14",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@headlessui/react": "^1.7.14",
     "@hello-pangea/dnd": "^16.2.0",
+    "@heroicons/react": "^2.0.18",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.1",
     "@svgr/webpack": "^6.5.1",
     "@vercel/analytics": "^0.1.11",
     "antd": "^5.5.0",
+    "axios": "^1.4.0",
     "emoji-picker-react": "^4.4.7",
     "eventsource-parser": "^0.1.0",
     "fuse.js": "^6.6.2",
@@ -53,6 +57,7 @@
     "@types/react-katex": "^3.0.0",
     "@types/spark-md5": "^3.0.2",
     "@types/woocommerce__woocommerce-rest-api": "^1.0.2",
+    "autoprefixer": "^10.4.14",
     "cross-env": "^7.0.3",
     "eslint": "^8.36.0",
     "eslint-config-next": "13.2.3",
@@ -60,7 +65,9 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.0",
+    "postcss": "^8.4.23",
     "prettier": "^2.8.7",
+    "tailwindcss": "^3.3.2",
     "typescript": "4.9.5"
   }
 }
