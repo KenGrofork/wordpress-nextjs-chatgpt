@@ -219,9 +219,9 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="email"
+                  id="phone-number"
                   label="手机号"
-                  name="email"
+                  name="phone number"
                   autoComplete="phone number"
                   inputProps={{
                     maxLength: 11,

@@ -13,6 +13,7 @@
     "proxy-dev": "sh ./scripts/init-proxy.sh && proxychains -f ./scripts/proxychains.conf yarn dev"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.14",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@hello-pangea/dnd": "^16.2.0",
@@ -20,11 +21,11 @@
     "@mui/material": "^5.13.1",
     "@svgr/webpack": "^6.5.1",
     "@vercel/analytics": "^0.1.11",
-    "@woocommerce/woocommerce-rest-api": "^1.0.1",
     "antd": "^5.5.0",
     "emoji-picker-react": "^4.4.7",
     "eventsource-parser": "^0.1.0",
     "fuse.js": "^6.6.2",
+    "graphql": "^16.6.0",
     "jwt-decode": "^3.1.2",
     "mermaid": "^10.1.0",
     "next": "^13.3.1-canary.8",
@@ -51,6 +52,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-katex": "^3.0.0",
     "@types/spark-md5": "^3.0.2",
+    "@types/woocommerce__woocommerce-rest-api": "^1.0.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.36.0",
     "eslint-config-next": "13.2.3",
