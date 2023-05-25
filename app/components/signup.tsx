@@ -120,10 +120,10 @@ export default function SignUp() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     //请求验证接口获取返回值
-    if (!/^1\d{10}$/.test(phone) || !password || !code) {
+    if (!/^1\d{10}$/.test(phone) || !password || !/^1\d{10}$/.test(code)) {
       console.log("请输入完整信息");
       setOpen(true);
-      setMessage("请输入正确完整信息");
+      setMessage("请输入正确信息");
       setSeverity("warning");
       return;
     }
@@ -152,7 +152,8 @@ export default function SignUp() {
           },
         );
 
-        console.log(response);
+        console.log(response.data.id);
+        localStorage.setItem("user_info", response.data.id);
 
         // 获取 token 保存本地
         const tokenResponse = await axios.post(

@@ -17,7 +17,8 @@ import { Path } from "../constant";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import MySnackbar from "./mysnackbar";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
+import getUserInfo from "../api/restapi/authuser";
 
 const defaultTheme = createTheme();
 
@@ -59,7 +60,6 @@ export default function Login() {
       setSeverity("warning");
       return; // 提前结束函数
     }
-    const data = new FormData(event.currentTarget);
     //如果前方的校验都通过，则提交数据，请求后端接口
     try {
       const postData = {
@@ -70,11 +70,13 @@ export default function Login() {
         `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/jwt-auth/v1/token`,
         postData,
       );
+      console.log(response.data);
       localStorage.setItem("jwt_token", response.data.token);
       if (response.status === 200) {
         setOpen(true);
         setMessage("登录成功");
         setSeverity("success");
+        getUserInfo();
         setTimeout(() => {
           window.location.href = "/#/usercenter";
         }, 1000);
@@ -88,7 +90,7 @@ export default function Login() {
       //   setShowError(true);
       //
       setOpen(true);
-      setMessage("登录失败,请检查用户名密码是否正确");
+      setMessage("登录失败,请检查手机号或密码是否正确");
       setSeverity("error");
     }
   };

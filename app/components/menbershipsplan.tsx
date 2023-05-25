@@ -92,6 +92,10 @@ function Pricing() {
   const [transpayment, setTranspayment] = React.useState("微信");
   const [selectedMembershipOption, setSelectedMembershipOption] =
     React.useState(0);
+  const user_id = localStorage.getItem("user_info");
+  const [order_id, setOrder_id] = React.useState(
+    localStorage.getItem("current_order_id"),
+  );
 
   // 调用https://chatgpt.funny-code.top/wp-json/wc/v3/orders端口，使用woocommerce restAPI创建一个订单
   const handleSubmit = async () => {
@@ -111,7 +115,7 @@ function Pricing() {
       payment_method: SelectedPaymentMethod,
       payment_method_title: SelectedPaymentMethod,
       set_paid: false,
-      customer_id: 1,
+      customer_id: user_id,
       billing: {
         // first_name: "John",
         // last_name: "Doe",
@@ -146,9 +150,14 @@ function Pricing() {
     const getexptime = localorderdata ? JSON.parse(localorderdata).exptime : 0;
     if (localorderdata && currentTimestmp < getexptime) {
       setLoading(false);
-      setImageURL(JSON.parse(localorderdata).urlQrcode);
-      setOpen(true);
-      return;
+      if (userAgent) {
+        window.location.href = JSON.parse(localorderdata).url;
+        return;
+      } else {
+        setImageURL(JSON.parse(localorderdata).urlQrcode);
+        setOpen(true);
+        return;
+      }
     } else {
       try {
         const response = await axios.post(
@@ -158,6 +167,8 @@ function Pricing() {
         );
         console.log(response.data);
         const orderId = response.data.id;
+        setOrder_id(orderId);
+        localStorage.setItem("current_order_id", orderId);
         // setOrderId(response.data.id);
         if (response.data.id) {
           try {
@@ -174,6 +185,22 @@ function Pricing() {
             const qrcode = JSON.parse(getpaymentimg.data);
             console.log(qrcode);
             if (userAgent) {
+              const ordertime = new Date();
+              const exptime = new Date(ordertime.getTime() + 15 * 60 * 1000);
+              const ordertimestamp = ordertime.getTime();
+              const exptimestamp = exptime.getTime();
+              let orderdata = {
+                urlQrcode: qrcode.url_qrcode,
+                url: qrcode.url,
+                productId: productId,
+                ordertime: ordertimestamp,
+                exptime: exptimestamp,
+                payment: SelectedPaymentMethod,
+              };
+              localStorage.setItem(
+                "orderdata_" + productId + "_" + SelectedPaymentMethod,
+                JSON.stringify(orderdata),
+              );
               window.location.href = qrcode.url;
               return;
             }
@@ -424,6 +451,7 @@ function Pricing() {
           handleClose={handleClose}
           imageURL={imageURL}
           paymentId={transpayment}
+          orderId={order_id}
         />
         <Typography variant="h6" align="center" sx={{ mb: 6, mt: 6 }}>
           为什么选择我们？
