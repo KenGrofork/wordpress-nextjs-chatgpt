@@ -20,6 +20,7 @@ import Wechat from "./wechat";
 import Alipay from "./alipay";
 import Divider from "@mui/material/Divider";
 import PaymentIcon from "@mui/icons-material/Payment";
+import { isWebApp } from "./iswapapp";
 
 const theme = createTheme({
   palette: {
@@ -82,6 +83,7 @@ function Pricing() {
   const [open, setOpen] = React.useState(false);
   const [imageURL, setImageURL] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [redirectUrl, setRedirectUrl] = React.useState("");
 
   // const handleClickOpen = () => {
   //     setOpen(true);
@@ -100,6 +102,8 @@ function Pricing() {
   // 调用https://chatgpt.funny-code.top/wp-json/wc/v3/orders端口，使用woocommerce restAPI创建一个订单
   const handleSubmit = async () => {
     setLoading(true);
+    const userAgent = isWebApp();
+    console.log(userAgent);
     const productId = membershipOptions[selectedMembershipOption].id;
     const productTitle = membershipOptions[selectedMembershipOption].title;
     const productPrice = membershipOptions[selectedMembershipOption].price;
@@ -163,6 +167,10 @@ function Pricing() {
           console.log(getpaymentimg.data);
           const qrcode = JSON.parse(getpaymentimg.data);
           console.log(qrcode);
+          if (userAgent) {
+            window.location.href = qrcode.url;
+            return;
+          }
           setImageURL(qrcode.url_qrcode);
           setOpen(true);
         } catch (error) {
