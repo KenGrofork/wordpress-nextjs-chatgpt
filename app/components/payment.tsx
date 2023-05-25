@@ -16,13 +16,18 @@ const CustomDialogContent = styled(DialogContent)({
   padding: "32px",
 });
 
-function QRCodeDialog(props: { open: any; handleClose: any; imageURL: any }) {
-  const { open, handleClose, imageURL } = props;
+function QRCodeDialog(props: {
+  open: any;
+  handleClose: any;
+  imageURL: any;
+  paymentId: any;
+}) {
+  const { open, handleClose, imageURL, paymentId } = props;
 
   return (
     <div>
       <Dialog onClose={handleClose} open={open}>
-        <CustomDialogTitle>展示图片</CustomDialogTitle>
+        <CustomDialogTitle>使用{paymentId}扫描下方二维码支付</CustomDialogTitle>
         <CustomDialogContent>
           <img src={imageURL} alt="图片" />
         </CustomDialogContent>

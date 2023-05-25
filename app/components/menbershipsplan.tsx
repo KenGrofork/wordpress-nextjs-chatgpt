@@ -83,19 +83,13 @@ function Pricing() {
   const [open, setOpen] = React.useState(false);
   const [imageURL, setImageURL] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [redirectUrl, setRedirectUrl] = React.useState("");
 
-  // const handleClickOpen = () => {
-  //     setOpen(true);
-  //     setImageURL(
-  //         "https://api.xunhupay.com/payments/wechat/qrcode?id=20232100405&nonce_str=4936118325&time=1684935213&appid=201906155700&hash=889ef4f9ad88850e980f0ab3496e73d8",
-  //     );
-  // };
   const handleClose = () => {
     setOpen(false);
   };
   const [SelectedPaymentMethod, setSelectedPaymentMethod] =
     React.useState("wechat");
+  const [transpayment, setTranspayment] = React.useState("微信");
   const [selectedMembershipOption, setSelectedMembershipOption] =
     React.useState(0);
 
@@ -114,19 +108,20 @@ function Pricing() {
       },
     };
     const data = {
-      payment_method: "bacs",
-      payment_method_title: "Direct Bank Transfer",
-      set_paid: true,
+      payment_method: SelectedPaymentMethod,
+      payment_method_title: SelectedPaymentMethod,
+      set_paid: false,
+      customer_id: 1,
       billing: {
-        first_name: "John",
-        last_name: "Doe",
-        address_1: "969 Market",
-        address_2: "",
-        city: "San Francisco",
-        state: "CA",
-        postcode: "94103",
-        country: "US",
-        email: "evanrobertsca@gmail.com",
+        // first_name: "John",
+        // last_name: "Doe",
+        // address_1: "969 Market",
+        // address_2: "",
+        // city: "San Francisco",
+        // state: "CA",
+        // postcode: "94103",
+        // country: "US",
+        // email: "evanrobertsca@gmail.com",
       },
       shipping: {},
       line_items: [
@@ -143,43 +138,72 @@ function Pricing() {
         },
       ],
     };
+    const localorderdata = localStorage.getItem(
+      "orderdata_" + productId + "_" + SelectedPaymentMethod,
+    );
+    const currentTime = new Date();
+    const currentTimestmp = currentTime.getTime();
+    const getexptime = localorderdata ? JSON.parse(localorderdata).exptime : 0;
+    if (localorderdata && currentTimestmp < getexptime) {
+      setLoading(false);
+      setImageURL(JSON.parse(localorderdata).urlQrcode);
+      setOpen(true);
+      return;
+    } else {
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wc/v3/orders`,
+          data,
+          config,
+        );
+        console.log(response.data);
+        const orderId = response.data.id;
+        // setOrderId(response.data.id);
+        if (response.data.id) {
+          try {
+            const getpaymentimg = await axios.post(
+              `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/my-plugin/v1/xunhupay`,
+              {
+                trade_order_id: orderId,
+                payment: SelectedPaymentMethod,
+                total_fee: productPrice,
+                title: productTitle,
+              },
+            );
+            console.log(getpaymentimg.data);
+            const qrcode = JSON.parse(getpaymentimg.data);
+            console.log(qrcode);
+            if (userAgent) {
+              window.location.href = qrcode.url;
+              return;
+            }
+            setImageURL(qrcode.url_qrcode);
+            setOpen(true);
+            const ordertime = new Date();
+            const exptime = new Date(ordertime.getTime() + 15 * 60 * 1000);
+            const ordertimestamp = ordertime.getTime();
+            const exptimestamp = exptime.getTime();
 
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wc/v3/orders`,
-        data,
-        config,
-      );
-      console.log(response.data);
-      const orderId = response.data.id;
-      // setOrderId(response.data.id);
-      if (response.data.id) {
-        try {
-          const getpaymentimg = await axios.post(
-            `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/my-plugin/v1/xunhupay`,
-            {
-              trade_order_id: orderId,
+            let orderdata = {
+              urlQrcode: qrcode.url_qrcode,
+              url: qrcode.url,
+              productId: productId,
+              ordertime: ordertimestamp,
+              exptime: exptimestamp,
               payment: SelectedPaymentMethod,
-              total_fee: productPrice,
-              title: productTitle,
-            },
-          );
-          console.log(getpaymentimg.data);
-          const qrcode = JSON.parse(getpaymentimg.data);
-          console.log(qrcode);
-          if (userAgent) {
-            window.location.href = qrcode.url;
-            return;
+            };
+            localStorage.setItem(
+              "orderdata_" + productId + "_" + SelectedPaymentMethod,
+              JSON.stringify(orderdata),
+            );
+          } catch (error) {
+            console.error(error);
           }
-          setImageURL(qrcode.url_qrcode);
-          setOpen(true);
-        } catch (error) {
-          console.error(error);
+          setLoading(false);
         }
-        setLoading(false);
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -277,7 +301,10 @@ function Pricing() {
                 border:
                   SelectedPaymentMethod === "wechat" ? "1px solid #000" : "",
               }}
-              onClick={() => setSelectedPaymentMethod("wechat")}
+              onClick={() => {
+                setSelectedPaymentMethod("wechat");
+                setTranspayment("微信");
+              }}
             >
               <CardContent
                 sx={
@@ -313,7 +340,10 @@ function Pricing() {
                 border:
                   SelectedPaymentMethod === "alipay" ? "1px solid #000" : "",
               }}
-              onClick={() => setSelectedPaymentMethod("alipay")}
+              onClick={() => {
+                setSelectedPaymentMethod("alipay");
+                setTranspayment("支付宝");
+              }}
             >
               <CardContent
                 sx={
@@ -393,8 +423,9 @@ function Pricing() {
           open={open}
           handleClose={handleClose}
           imageURL={imageURL}
+          paymentId={transpayment}
         />
-        <Typography variant="h4" align="center" sx={{ mb: 6, mt: 6 }}>
+        <Typography variant="h6" align="center" sx={{ mb: 6, mt: 6 }}>
           为什么选择我们？
         </Typography>
         <Grid container spacing={4} alignItems="center" justifyContent="center">
