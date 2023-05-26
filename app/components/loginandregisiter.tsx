@@ -18,7 +18,7 @@ import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import MySnackbar from "./mysnackbar";
 import axios, { AxiosResponse } from "axios";
-import getUserInfo from "../api/restapi/authuser";
+import { getUserInfo } from "../api/restapi/authuser";
 
 const defaultTheme = createTheme();
 
@@ -72,26 +72,22 @@ export default function Login() {
       );
       console.log(response.data);
       localStorage.setItem("jwt_token", response.data.token);
-      if (response.status === 200) {
+      if (localStorage.getItem("jwt_token")) {
+        console.log("token已经保存到本地");
         setOpen(true);
         setMessage("登录成功");
         setSeverity("success");
         getUserInfo();
         setTimeout(() => {
-          window.location.href = "/#/usercenter";
+          // window.location.href = "/#/usercenter";
+          window.location.href = Path.UserCenter;
         }, 1000);
       }
     } catch (error: unknown) {
-      // if ((error as AxiosError).response?.status === 400) {
-      //   setError("用户名或密码错误");
-      //   setShowError(true);
-      // } else {
-      //   setError((error as AxiosError).message);
-      //   setShowError(true);
-      //
       setOpen(true);
       setMessage("登录失败,请检查手机号或密码是否正确");
       setSeverity("error");
+      console.log(error);
     }
   };
   return (
@@ -169,7 +165,7 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              登录
             </Button>
             <MySnackbar
               open={open}

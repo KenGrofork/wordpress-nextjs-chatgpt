@@ -47,8 +47,7 @@ function QRCodeDialog(props: {
       setTimeout(() => {
         handleClose();
       }, 1000);
-    }
-    if (status === "pending") {
+    } else {
       setMessage("暂未收到付款，请稍后重试");
       setSeverity("warning");
       setIsopen(true);

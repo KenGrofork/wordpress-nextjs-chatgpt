@@ -120,7 +120,7 @@ export default function SignUp() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     //请求验证接口获取返回值
-    if (!/^1\d{10}$/.test(phone) || !password || !/^1\d{10}$/.test(code)) {
+    if (!/^1\d{10}$/.test(phone) || !password) {
       console.log("请输入完整信息");
       setOpen(true);
       setMessage("请输入正确信息");

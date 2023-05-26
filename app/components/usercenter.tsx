@@ -3,13 +3,9 @@ import {
   Avatar,
   Box,
   Button,
-  CircularProgress,
   Container,
   createTheme,
   LinearProgress,
-  List,
-  ListItem,
-  ListItemText,
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
@@ -19,7 +15,9 @@ import { Path } from "../constant";
 import CloseIcon from "../icons/close.svg";
 import { IconButton } from "./button";
 import { ThemeProvider } from "@emotion/react";
-import axios from "axios";
+import DataGridDemo from "./orderlist";
+import { getMenberInfo, getUserInfo } from "../api/restapi/restapi";
+import { isUserLogin } from "../api/restapi/authuser";
 
 const UserInfo = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -46,33 +44,33 @@ const UserCenter = () => {
   const defaultTheme = createTheme();
   const [progress, setProgress] = React.useState(0);
   //调用后端接口获取用户信息
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    email: "",
-  });
-
-  //获取用户信息
-  const getUserInfo = async () => {
-    const token = localStorage.getItem("jwt_token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wp/v2/users/me`,
-        config,
-      );
-      console.log(response.data);
-      setUserInfo(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [username, setUsername] = useState("");
+  //调用isuserlogin函数判断用户是否登录，未登录跳转到登录页面
   React.useEffect(() => {
-    getUserInfo();
+    async function fetchData() {
+      const islogin = await isUserLogin();
+      console.log(islogin);
+      if (!islogin) {
+        navigate(Path.Login);
+      }
+    }
+    fetchData();
   }, []);
+
+  React.useEffect(() => {
+    async function fetchData1() {
+      const myuserInfo = await getUserInfo();
+      console.log(myuserInfo);
+      setUsername(myuserInfo.name);
+    }
+    async function fetchData2() {
+      const memberInfo = await getMenberInfo();
+      console.log(memberInfo);
+    }
+
+    fetchData1();
+    fetchData2();
+  }, []); // 依赖数组为空，只在组件加载时调用异步函数
 
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -105,20 +103,19 @@ const UserCenter = () => {
     // 实现退出登录逻辑
     //点击按钮时清除本地存储中的jwt_token，然后跳转到登录页
     localStorage.removeItem("jwt_token");
+    localStorage.removeItem("user_info");
     // setOpen(true);
     // setMessage("已退出登录");
     // setSeverity("message");
     setTimeout(() => {
       navigate("/");
     }, 1000);
-    console.log(localStorage.getItem("jwt_token"));
   };
   return (
     <ThemeProvider theme={defaultTheme}>
       <div className="window-header">
         <div className="window-header-title">
           <div className="window-header-main-title">个人中心</div>
-          {/* <div className="window-header-sub-title">加入我们开始AIChat</div> */}
         </div>
         <div className="window-actions">
           <div className="window-action-button">
@@ -134,17 +131,9 @@ const UserCenter = () => {
         <UserInfo>
           <Avatar alt="User Avatar" src="/path/to/avatar.jpg" />
           <Typography variant="h6" component="div" marginLeft={2}>
-            User_{userInfo.name}
+            User_{username}
           </Typography>
         </UserInfo>
-        <List>
-          <ListItem>
-            <ListItemText primary="Email" secondary={userInfo.name} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="电话" secondary={userInfo.email} />
-          </ListItem>
-        </List>
         <ProgressContainer>
           <Typography variant="body1">到期时间</Typography>
           <Box sx={{ width: "60%" }}>
@@ -152,7 +141,8 @@ const UserCenter = () => {
           </Box>
           <Typography variant="body1">剩余13天</Typography>
         </ProgressContainer>
-        <Button variant="contained" onClick={handleLogout}>
+        <DataGridDemo />
+        <Button variant="contained" onClick={handleLogout} sx={{ mt: 0 }}>
           退出登录
         </Button>
         <MySnackbar

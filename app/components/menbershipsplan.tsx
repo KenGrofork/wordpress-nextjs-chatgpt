@@ -21,6 +21,7 @@ import Alipay from "./alipay";
 import Divider from "@mui/material/Divider";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { isWebApp } from "./iswapapp";
+import ControlledAccordions from "./aboutus";
 
 const theme = createTheme({
   palette: {
@@ -32,9 +33,9 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "SF Pro SC",
+    fontFamily: "PingFang SC",
     fontSize: 12,
-    fontWeightRegular: 400,
+    fontWeightRegular: 600,
     fontWeightBold: 600,
   },
 });
@@ -116,17 +117,7 @@ function Pricing() {
       payment_method_title: SelectedPaymentMethod,
       set_paid: false,
       customer_id: user_id,
-      billing: {
-        // first_name: "John",
-        // last_name: "Doe",
-        // address_1: "969 Market",
-        // address_2: "",
-        // city: "San Francisco",
-        // state: "CA",
-        // postcode: "94103",
-        // country: "US",
-        // email: "evanrobertsca@gmail.com",
-      },
+      billing: {},
       shipping: {},
       line_items: [
         {
@@ -297,7 +288,7 @@ function Pricing() {
                     <Typography
                       variant="subtitle1"
                       align="center"
-                      sx={{ mb: 1 }}
+                      sx={{ mb: 0 }}
                     >
                       {option.price ? `¥${option.price}` : `Contact`}
                       <span>/{option.lenth}</span>
@@ -453,62 +444,10 @@ function Pricing() {
           paymentId={transpayment}
           orderId={order_id}
         />
-        <Typography variant="h6" align="center" sx={{ mb: 6, mt: 6 }}>
+        <Typography variant="h6" align="left" sx={{ mb: 3, mt: 3 }}>
           为什么选择我们？
         </Typography>
-        <Grid container spacing={4} alignItems="center" justifyContent="center">
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              sx={{
-                boxShadow: "0px 5px 20px rgba(0, 0, 0, 0.2)",
-                borderRadius: "10px",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" sx={{ mb: 2 }}>
-                  会员说明
-                </Typography>
-                <Typography variant="body2" sx={{ mb: 4 }}>
-                  所有会员均使用相同api接口，区别在于使用时长.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              sx={{
-                boxShadow: "0px 5px 20px rgba(0, 0, 0, 0.2)",
-                borderRadius: "10px",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" sx={{ mb: 2 }}>
-                  为什么要收费
-                </Typography>
-                <Typography variant="body2" sx={{ mb: 4 }}>
-                  api接口需要服务器支持，服务器需要成本，所以需要收费.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              sx={{
-                boxShadow: "0px 5px 20px rgba(0, 0, 0, 0.2)",
-                borderRadius: "10px",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" sx={{ mb: 2 }}>
-                  售后稳定吗，会不会跑路
-                </Typography>
-                <Typography variant="body2" sx={{ mb: 4 }}>
-                  自从openai推出接口，我们就开始做这个了，一直在做，不会跑路.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        <ControlledAccordions />
       </Container>
     </ThemeProvider>
   );
