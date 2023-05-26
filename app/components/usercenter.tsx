@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   createTheme,
+  Grid,
   LinearProgress,
   Typography,
 } from "@mui/material";
@@ -47,17 +48,15 @@ const UserCenter = () => {
   const [username, setUsername] = useState("");
   //调用isuserlogin函数判断用户是否登录，未登录跳转到登录页面
   React.useEffect(() => {
-    async function fetchData() {
-      const islogin = await isUserLogin();
-      console.log(islogin);
-      if (!islogin) {
-        navigate(Path.Login);
-      }
+    const islogin = isUserLogin();
+    console.log(islogin);
+    if (!islogin) {
+      navigate(Path.Login);
+      return;
+    } else {
+      fetchData1();
+      fetchData2();
     }
-    fetchData();
-  }, []);
-
-  React.useEffect(() => {
     async function fetchData1() {
       const myuserInfo = await getUserInfo();
       console.log(myuserInfo);
@@ -67,10 +66,22 @@ const UserCenter = () => {
       const memberInfo = await getMenberInfo();
       console.log(memberInfo);
     }
+  }, []);
 
-    fetchData1();
-    fetchData2();
-  }, []); // 依赖数组为空，只在组件加载时调用异步函数
+  // React.useEffect(() => {
+  //   async function fetchData1() {
+  //     const myuserInfo = await getUserInfo();
+  //     console.log(myuserInfo);
+  //     setUsername(myuserInfo.name);
+  //   }
+  //   async function fetchData2() {
+  //     const memberInfo = await getMenberInfo();
+  //     console.log(memberInfo);
+  //   }
+
+  //   fetchData1();
+  //   fetchData2();
+  // }, []); // 依赖数组为空，只在组件加载时调用异步函数
 
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -108,7 +119,7 @@ const UserCenter = () => {
     // setMessage("已退出登录");
     // setSeverity("message");
     setTimeout(() => {
-      navigate("/");
+      navigate("/loginandregisiter");
     }, 1000);
   };
   return (
@@ -142,9 +153,16 @@ const UserCenter = () => {
           <Typography variant="body1">剩余13天</Typography>
         </ProgressContainer>
         <DataGridDemo />
-        <Button variant="contained" onClick={handleLogout} sx={{ mt: 0 }}>
-          退出登录
-        </Button>
+        <Grid item>
+          <Button
+            size="large"
+            color="primary"
+            variant="contained"
+            onClick={handleLogout}
+          >
+            退出登录
+          </Button>
+        </Grid>
         <MySnackbar
           open={open}
           handleClose={handleClose}

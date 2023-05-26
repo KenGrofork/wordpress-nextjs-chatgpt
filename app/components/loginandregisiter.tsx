@@ -18,11 +18,21 @@ import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import MySnackbar from "./mysnackbar";
 import axios, { AxiosResponse } from "axios";
-import { getUserInfo } from "../api/restapi/authuser";
+import { getUserInfo, isUserLogin } from "../api/restapi/authuser";
 
 const defaultTheme = createTheme();
 
 export default function Login() {
+  React.useEffect(() => {
+    const res = isUserLogin();
+    console.log(res);
+    if (res) {
+      setOpen(true);
+      setMessage("您已登录，无需重复登录");
+      setSeverity("warning");
+      window.location.href = "/#/usercenter";
+    }
+  }, []);
   //定义用户名密码
   const [phone, setPhone] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -79,8 +89,8 @@ export default function Login() {
         setSeverity("success");
         getUserInfo();
         setTimeout(() => {
-          // window.location.href = "/#/usercenter";
-          window.location.href = Path.UserCenter;
+          window.location.href = "/#/usercenter";
+          // window.location.reload();
         }, 1000);
       }
     } catch (error: unknown) {

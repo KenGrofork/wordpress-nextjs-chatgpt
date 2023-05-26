@@ -19,11 +19,24 @@ import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { useNavigate } from "react-router-dom";
+import { isUserLogin } from "../api/restapi/authuser";
+import { Path } from "../constant";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  React.useEffect(() => {
+    const res = isUserLogin();
+    console.log(res);
+    if (res) {
+      setOpen(true);
+      setMessage("请先退出登录");
+      setSeverity("warning");
+      window.location.href = "/#/usercenter";
+    }
+  }, []);
+
   //获取验证码倒计时
   const [countdown, setCountdown] = useState(0);
   const [isCounting, setIsCounting] = useState(false);

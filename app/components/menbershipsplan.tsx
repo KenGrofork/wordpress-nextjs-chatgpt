@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -22,6 +22,8 @@ import Divider from "@mui/material/Divider";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { isWebApp } from "./iswapapp";
 import ControlledAccordions from "./aboutus";
+import { isUserLogin } from "../api/restapi/authuser";
+import MySnackbar from "./mysnackbar";
 
 const theme = createTheme({
   palette: {
@@ -80,6 +82,13 @@ const membershipOptions = [
   },
 ];
 function Pricing() {
+  React.useEffect(() => {
+    const res = isUserLogin();
+    console.log(res);
+    if (!res) {
+      window.location.href = "/#/signup";
+    }
+  }, []);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [imageURL, setImageURL] = React.useState("");
