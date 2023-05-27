@@ -494,6 +494,21 @@ export function Chat() {
   const onUserSubmit = () => {
     const isfree = localStorage.getItem("service_count");
     const ismember = localStorage.getItem("ismember");
+    const islogin = localStorage.getItem("jwt_token");
+    if (islogin === null) {
+      setShow(true);
+      setSeverity("info");
+      setMessage("请先登录");
+      setTimeout(() => {
+        navigate(Path.SiunUp);
+      }, 1000);
+      return;
+    }
+    if (ismember === "false" && isfree != "0") {
+      setShow(true);
+      setSeverity("info");
+      setMessage(`免费试用次数剩余：${isfree}次.`);
+    }
     if (ismember === "false" && isfree === "0") {
       setShow(true);
       setSeverity("info");
