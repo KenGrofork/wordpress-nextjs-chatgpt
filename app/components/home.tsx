@@ -24,6 +24,7 @@ import {
 } from "react-router-dom";
 import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
+import { Analytics } from "@vercel/analytics/react";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -167,6 +168,7 @@ export function Home() {
     <ErrorBoundary>
       <Router>
         <Screen />
+        <Analytics />
       </Router>
     </ErrorBoundary>
   );

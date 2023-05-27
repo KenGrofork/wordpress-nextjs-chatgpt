@@ -72,11 +72,6 @@ export default function DataGridDemo() {
           />
         </Box>
       )}
-      {showButton && (
-        <Button variant="contained" disableElevation sx={{ mt: 8 }}>
-          Disable elevation
-        </Button>
-      )}
     </div>
   );
 }

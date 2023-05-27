@@ -25,7 +25,7 @@
     "@mui/material": "^5.13.1",
     "@mui/x-data-grid": "^6.5.0",
     "@svgr/webpack": "^6.5.1",
-    "@vercel/analytics": "^0.1.11",
+    "@vercel/analytics": "^1.0.1",
     "antd": "^5.5.0",
     "axios": "^1.4.0",
     "emoji-picker-react": "^4.4.7",
