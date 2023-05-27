@@ -106,6 +106,7 @@ const UserCenter = () => {
     localStorage.removeItem("jwt_token");
     localStorage.removeItem("user_info");
     localStorage.removeItem("service_count");
+    localStorage.removeItem("ismember");
     // setOpen(true);
     // setMessage("已退出登录");
     // setSeverity("message");
