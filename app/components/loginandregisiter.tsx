@@ -19,6 +19,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import MySnackbar from "./mysnackbar";
 import axios, { AxiosResponse } from "axios";
 import { getUserInfo, isUserLogin } from "../api/restapi/authuser";
+import getServiceCount from "../api/restapi/servicecount";
 
 const defaultTheme = createTheme();
 
@@ -87,6 +88,7 @@ export default function Login() {
         setOpen(true);
         setMessage("登录成功");
         setSeverity("success");
+        getServiceCount();
         getUserInfo();
         setTimeout(() => {
           window.location.href = "/#/usercenter";

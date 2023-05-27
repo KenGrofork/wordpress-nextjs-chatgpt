@@ -84,20 +84,6 @@ interface BasicListProps {
 }
 
 export default function BasicList({ isLoggedIn }: BasicListProps) {
-  // React.useEffect(() => {
-  //   async function fetchData() {
-  //     const islogin = isUserLogin();
-  //     if (!islogin) {
-  //       setIsLoggedIn(false);
-  //       console.log(isLoggedIn);
-  //     } else {
-  //       setIsLoggedIn(true);
-  //       console.log(isLoggedIn);
-  //     }
-  //   }
-  //   fetchData();
-  // }, [setIsLoggedIn]);
-
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <nav aria-label="main mailbox folders">

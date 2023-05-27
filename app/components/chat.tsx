@@ -63,6 +63,9 @@ import {
   DEFAULT_MASK_ID,
   useMaskStore,
 } from "../store/mask";
+import MySnackbar from "./mysnackbar";
+import getServiceCount from "../api/restapi/servicecount";
+import { isMember } from "../api/restapi/ismember";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -479,7 +482,27 @@ export function Chat() {
   };
 
   // submit user input
+  const [show, setShow] = useState(false);
+  const [severity, setSeverity] = useState("info");
+  const [message, setMessage] = useState("");
+  const handleClose = () => setShow(false);
+
+  useEffect(() => {
+    isMember();
+  }, []);
+
   const onUserSubmit = () => {
+    const isfree = localStorage.getItem("service_count");
+    const ismember = localStorage.getItem("ismember");
+    if (ismember === "false" && isfree === "0") {
+      setShow(true);
+      setSeverity("info");
+      setMessage("免费次数已耗尽，请订阅后继续使用");
+      setTimeout(() => {
+        navigate(Path.Pricing);
+      }, 1000);
+      return;
+    }
     if (userInput.trim() === "") return;
     setIsLoading(true);
     chatStore.onUserInput(userInput).then(() => setIsLoading(false));
@@ -488,6 +511,8 @@ export function Chat() {
     setPromptHints([]);
     if (!isMobileScreen) inputRef.current?.focus();
     setAutoScroll(true);
+    getServiceCount();
+    isMember();
   };
 
   // stop response
@@ -817,6 +842,12 @@ export function Chat() {
             className={styles["chat-input-send"]}
             type="primary"
             onClick={onUserSubmit}
+          />
+          <MySnackbar
+            open={show}
+            handleClose={handleClose}
+            severity={severity}
+            message={message}
           />
         </div>
       </div>

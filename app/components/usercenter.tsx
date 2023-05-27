@@ -19,6 +19,8 @@ import { ThemeProvider } from "@emotion/react";
 import DataGridDemo from "./orderlist";
 import { getMenberInfo, getUserInfo } from "../api/restapi/restapi";
 import { isUserLogin } from "../api/restapi/authuser";
+import getServiceCount from "../api/restapi/servicecount";
+import { isMember } from "../api/restapi/ismember";
 
 const UserInfo = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -48,6 +50,7 @@ const UserCenter = () => {
   const [username, setUsername] = useState("");
   //调用isuserlogin函数判断用户是否登录，未登录跳转到登录页面
   React.useEffect(() => {
+    isMember();
     const islogin = isUserLogin();
     console.log(islogin);
     if (!islogin) {
@@ -56,10 +59,12 @@ const UserCenter = () => {
     } else {
       fetchData1();
       fetchData2();
+      const serviceInfo = getServiceCount();
+      console.log(serviceInfo);
     }
     async function fetchData1() {
       const myuserInfo = await getUserInfo();
-      console.log(myuserInfo);
+      console.log("测试一下");
       setUsername(myuserInfo.name);
     }
     async function fetchData2() {
@@ -67,21 +72,6 @@ const UserCenter = () => {
       console.log(memberInfo);
     }
   }, []);
-
-  // React.useEffect(() => {
-  //   async function fetchData1() {
-  //     const myuserInfo = await getUserInfo();
-  //     console.log(myuserInfo);
-  //     setUsername(myuserInfo.name);
-  //   }
-  //   async function fetchData2() {
-  //     const memberInfo = await getMenberInfo();
-  //     console.log(memberInfo);
-  //   }
-
-  //   fetchData1();
-  //   fetchData2();
-  // }, []); // 依赖数组为空，只在组件加载时调用异步函数
 
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -115,6 +105,7 @@ const UserCenter = () => {
     //点击按钮时清除本地存储中的jwt_token，然后跳转到登录页
     localStorage.removeItem("jwt_token");
     localStorage.removeItem("user_info");
+    localStorage.removeItem("service_count");
     // setOpen(true);
     // setMessage("已退出登录");
     // setSeverity("message");

@@ -10,9 +10,9 @@ interface Product {
 export async function GetProductData(productIds: number[]): Promise<Product[]> {
   try {
     const response = await axios.get(
-      `https://chatgpt.funny-code.top/wp-json/wp/v2/product?include=${productIds.join(
-        ",",
-      )}`,
+      `${
+        process.env.NEXT_PUBLIC_WORDPRESS_API_URL
+      }/wp-json/wp/v2/product?include=${productIds.join(",")}`,
     );
     return response.data as Product[];
   } catch (error) {
