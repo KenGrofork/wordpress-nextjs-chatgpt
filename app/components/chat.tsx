@@ -66,6 +66,7 @@ import {
 import MySnackbar from "./mysnackbar";
 import getServiceCount from "../api/restapi/servicecount";
 import { isMember } from "../api/restapi/ismember";
+import { Link } from "@mui/material";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -486,15 +487,32 @@ export function Chat() {
   const [severity, setSeverity] = useState("info");
   const [message, setMessage] = useState("");
   const handleClose = () => setShow(false);
+  const [freeleft, setFreeleft] = useState("");
+  const [freeshow, setFreeshow] = useState(false);
 
   useEffect(() => {
     isMember();
+    const isfree = localStorage.getItem("service_count");
+    console.log(isfree);
+    const ismember = localStorage.getItem("ismember");
+    if (ismember === "false" && isfree != "0") {
+      setFreeleft(`免费试用次数剩余：${isfree}次.`);
+      setFreeshow(true);
+    } else {
+      setFreeshow(false);
+    }
   }, []);
 
-  const onUserSubmit = () => {
+  const onUserSubmit = async () => {
     const isfree = localStorage.getItem("service_count");
     const ismember = localStorage.getItem("ismember");
     const islogin = localStorage.getItem("jwt_token");
+    // if (ismember === "false" && isfree != "0") {
+    //   setFreeleft(`免费试用次数剩余：${isfree}次.`);
+    //   setFreeshow(true);
+    // } else {
+    //   setFreeshow(false);
+    // }
     if (islogin === null) {
       setShow(true);
       setSeverity("info");
@@ -504,11 +522,7 @@ export function Chat() {
       }, 1000);
       return;
     }
-    if (ismember === "false" && isfree != "0") {
-      setShow(true);
-      setSeverity("info");
-      setMessage(`免费试用次数剩余：${isfree}次.`);
-    }
+
     if (ismember === "false" && isfree === "0") {
       setShow(true);
       setSeverity("info");
@@ -526,7 +540,14 @@ export function Chat() {
     setPromptHints([]);
     if (!isMobileScreen) inputRef.current?.focus();
     setAutoScroll(true);
-    getServiceCount();
+    const res = await getServiceCount();
+    console.log(res);
+    if (ismember === "false" && isfree != "0") {
+      setFreeleft(`免费试用次数剩余：${res.service_count}次.`);
+      setFreeshow(true);
+    } else {
+      setFreeshow(false);
+    }
     isMember();
   };
 
@@ -672,6 +693,24 @@ export function Chat() {
             {Locale.Chat.SubTitle(session.messages.length)}
           </div>
         </div>
+        {freeshow && !isMobileScreen && (
+          <div className="window-header-title">
+            <div className="window-header-sub-title">
+              <text>{freeleft}</text>
+            </div>
+            <Link
+              component="button"
+              variant="overline"
+              align="center"
+              justifyContent="center"
+              onClick={() => {
+                navigate(Path.Pricing);
+              }}
+            >
+              开通会员{">"}
+            </Link>
+          </div>
+        )}
         <div className="window-actions">
           <div className={"window-action-button" + " " + styles.mobile}>
             <IconButton
@@ -715,12 +754,12 @@ export function Chat() {
             </div>
           )}
         </div>
-
+        {/* 
         <PromptToast
           showToast={!hitBottom}
           showModal={showPromptModal}
           setShowModal={setShowPromptModal}
-        />
+        /> */}
       </div>
 
       <div
@@ -734,6 +773,40 @@ export function Chat() {
           setAutoScroll(false);
         }}
       >
+        {freeshow && isMobileScreen && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "fixed",
+              top: "50",
+              margin: "0 auto", // 修改此处
+              width: "90%",
+              backgroundColor: "rgba(255,255,255,1)",
+              border: "1px solid #ccc",
+              borderRadius: "30px",
+              zIndex: 999,
+              padding: "5px 0px",
+            }}
+          >
+            <div className="window-header-sub-title">
+              <text style={{ fontSize: "14px" }}>{freeleft}</text>
+            </div>
+            <Link
+              component="button"
+              variant="overline"
+              align="center"
+              justifyContent="center"
+              onClick={() => {
+                navigate(Path.Pricing);
+              }}
+            >
+              开通会员{">"}
+            </Link>
+          </div>
+        )}
         {messages.map((message, i) => {
           const isUser = message.role === "user";
           const showActions =
