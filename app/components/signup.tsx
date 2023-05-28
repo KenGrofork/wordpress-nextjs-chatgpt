@@ -18,7 +18,6 @@ import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { isUserLogin } from "../api/restapi/authuser";
-import BaiduAnalytics from "../BaiduAnalytics";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -332,7 +331,6 @@ export default function SignUp() {
           </Box>
         </Box>
       </Container>
-      <BaiduAnalytics />
     </ThemeProvider>
   );
 }
