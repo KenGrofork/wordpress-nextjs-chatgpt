@@ -3,7 +3,6 @@ import "./styles/globals.scss";
 import "./styles/markdown.scss";
 import "./styles/highlight.scss";
 import { getBuildConfig } from "./config/build";
-import BaiduAnalytics from "./BaiduAnalytics";
 
 const buildConfig = getBuildConfig();
 
@@ -44,10 +43,7 @@ export default function RootLayout({
         ></link> */}
         <script src="/serviceWorkerRegister.js" defer></script>
       </head>
-      <body>
-        <BaiduAnalytics />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
