@@ -73,6 +73,9 @@ const UserCenter = dynamic(async () => (await import("./usercenter")).default, {
 const SignUp = dynamic(async () => (await import("./signup")).default, {
   loading: () => <Loading noLogo />,
 });
+// const HomePage = dynamic(async () => (await import("./promptcard")).default, {
+//   loading: () => <Loading noLogo />,
+// });
 
 export function useSwitchTheme() {
   const config = useAppConfig();
@@ -151,6 +154,7 @@ function Screen() {
           <Route path={Path.UserCenter} element={<UserCenter />} />
           <Route path={Path.SiunUp} element={<SignUp />} />
           <Route path={Path.Pricing} element={<Pricing />} />
+          {/* <Route path={Path.HomePage} element={<HomePage />} /> */}
         </Routes>
       </div>
     </div>

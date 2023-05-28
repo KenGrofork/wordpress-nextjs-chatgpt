@@ -48,6 +48,15 @@ export default function BasicList({ isLoggedIn }: BasicListProps) {
           shadow
         />
       </div>
+      {/* <div className={styles["sidebar-header-bar"]}>
+        <IconButton
+          icon={<VipIcon />}
+          text="test"
+          className={styles["sidebar-bar-button"]}
+          onClick={() => navigate(Path.HomePage)}
+          shadow
+        />
+      </div> */}
     </div>
   );
 }
