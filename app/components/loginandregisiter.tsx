@@ -20,6 +20,7 @@ import MySnackbar from "./mysnackbar";
 import axios, { AxiosResponse } from "axios";
 import { getUserInfo, isUserLogin } from "../api/restapi/authuser";
 import getServiceCount from "../api/restapi/servicecount";
+import BaiduAnalytics from "../BaiduAnalytics";
 
 const defaultTheme = createTheme();
 
@@ -197,6 +198,7 @@ export default function Login() {
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
+      <BaiduAnalytics />
     </ThemeProvider>
   );
 }
