@@ -43,6 +43,7 @@ export default function Login() {
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [severity, setSeverity] = React.useState("success");
+  const referrer = document.referrer;
   const handleClose = (
     _event?: React.SyntheticEvent | Event,
     reason?: string,
@@ -93,6 +94,7 @@ export default function Login() {
         mixpanel.track("Login in", {
           "Signup Type": "1",
           username: phone,
+          referrer: referrer,
         });
         getServiceCount();
         getUserInfo();

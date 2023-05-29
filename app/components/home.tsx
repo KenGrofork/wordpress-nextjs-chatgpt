@@ -25,7 +25,9 @@ import {
 import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
 import { Analytics } from "@vercel/analytics/react";
+import mixpanel from "mixpanel-browser";
 
+mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 export function Loading(props: { noLogo?: boolean }) {
   return (
     <div className={styles["loading-content"] + " no-dark"}>
@@ -125,6 +127,14 @@ function Screen() {
   const isMobileScreen = useMobileScreen();
 
   const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const referrer = document.referrer;
+    console.log("referrer", referrer);
+    mixpanel.track("Page view", {
+      referrer: referrer,
+    });
+  }, []);
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1);
