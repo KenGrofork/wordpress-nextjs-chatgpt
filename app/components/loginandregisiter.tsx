@@ -20,7 +20,9 @@ import MySnackbar from "./mysnackbar";
 import axios, { AxiosResponse } from "axios";
 import { getUserInfo, isUserLogin } from "../api/restapi/authuser";
 import getServiceCount from "../api/restapi/servicecount";
+import mixpanel from "mixpanel-browser";
 
+mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 const defaultTheme = createTheme();
 
 export default function Login() {
@@ -88,6 +90,10 @@ export default function Login() {
         setOpen(true);
         setMessage("登录成功");
         setSeverity("success");
+        mixpanel.track("Login in", {
+          "Signup Type": "1",
+          username: phone,
+        });
         getServiceCount();
         getUserInfo();
         setTimeout(() => {

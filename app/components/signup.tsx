@@ -18,9 +18,11 @@ import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { isUserLogin } from "../api/restapi/authuser";
+import mixpanel from "mixpanel-browser";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
+mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 
 export default function SignUp() {
   React.useEffect(() => {
@@ -181,6 +183,9 @@ export default function SignUp() {
           setMessage("注册成功");
           setSeverity("success");
           localStorage.setItem("service_count", "10");
+          mixpanel.track("Signed Up", {
+            "Signup Type": "Referral",
+          });
           setTimeout(() => {
             navigate("/");
           }, 1000);
