@@ -251,10 +251,7 @@ function Pricing() {
           </div>
         </div>
       </div>
-      <Container
-        maxWidth="lg"
-        sx={{ mt: 4, minHeight: "100vh", overflow: "auto" }}
-      >
+      <Container maxWidth="lg" sx={{ mt: 4, overflow: "auto" }}>
         <Typography variant="h6" align="left" sx={{ mb: 3 }}>
           选择一个会员加入我们
         </Typography>
@@ -453,7 +450,18 @@ function Pricing() {
           paymentId={transpayment}
           orderId={order_id}
         />
-        <Typography variant="h6" align="left" sx={{ mb: 3, mt: 3 }}>
+        <Typography
+          variant="h6"
+          align="left"
+          sx={{
+            mb: 3,
+            mt: 3,
+            // "@media (max-width: 600px)": {
+            //   maxHeight: "50vh",
+            //   overflowY: "scroll",
+            // },
+          }}
+        >
           为什么选择我们？
         </Typography>
         <ControlledAccordions />

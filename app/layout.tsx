@@ -7,11 +7,11 @@ import { getBuildConfig } from "./config/build";
 const buildConfig = getBuildConfig();
 
 export const metadata = {
-  title: "chatgpt-bot - 国内版入口，直接使用gpt",
+  title: "AI.chat - 国内直接使用的Gpt",
   description:
     "国内能轻松使用的chatgpt网站，官方接口，可联系上下文像真人一样沟通交流，可作为你工作上的私人助理，生活上的私人管家。",
   appleWebApp: {
-    title: "chatgpt-bot - 国内版入口，直接使用gpt",
+    title: "AI.chat - 国内直接使用的Gpt",
     statusBarStyle: "default",
   },
   themeColor: "#fafafa",
