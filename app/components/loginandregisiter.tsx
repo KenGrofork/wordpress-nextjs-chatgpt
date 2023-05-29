@@ -175,10 +175,6 @@ export default function Login() {
                 ),
               }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="记住密码"
-            />
             <Button
               type="submit"
               fullWidth

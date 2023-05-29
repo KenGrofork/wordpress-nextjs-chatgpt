@@ -42,7 +42,7 @@
   width: var(--sidebar-width);
   box-sizing: border-box;
   padding: 20px;
-  background-color: var(--second);
+  background-color: #ececec;
   display: flex;
   flex-direction: column;
   box-shadow: inset -2px 0px 2px 0px rgb(0, 0, 0, 0.05);
@@ -53,13 +53,25 @@
     display: flex;
     margin-bottom: 20px;
 
+
     .sidebar-bar-button {
       flex-grow: 1;
+      // background-color: var(--second);
 
       &:not(:last-child) {
         margin-right: 10px;
       }
     }
+
+    // .sidebar-header-bar-vip{
+    //   flex-grow: 1;
+    //   background-color: rgb(200, 127, 83);
+    //   width: 100%;
+
+    //   &:not(:last-child) {
+    //     margin-right: 10px;
+    //   }
+    // }
   }
 }
 
@@ -120,12 +132,15 @@
     display: block;
   }
 }
-.site-logo{
+
+.site-logo {
   text-align: center;
 }
-.site-logo1{
-  width: 40%;
+
+.site-logo1 {
+  width: 70%;
 }
+
 .sidebar-header {
   position: relative;
   padding-top: 20px;
@@ -198,12 +213,12 @@
   cursor: pointer;
 }
 
-.chat-item:hover > .chat-item-delete {
+.chat-item:hover>.chat-item-delete {
   opacity: 0.5;
   right: 10px;
 }
 
-.chat-item:hover > .chat-item-delete:hover {
+.chat-item:hover>.chat-item-delete:hover {
   opacity: 1;
 }
 
@@ -224,10 +239,12 @@
 }
 
 .narrow-sidebar {
+
   .sidebar-title,
   .sidebar-sub-title {
     display: none;
   }
+
   .sidebar-logo {
     position: relative;
     display: flex;
@@ -238,6 +255,10 @@
     flex-direction: column;
 
     .sidebar-bar-button {
+
+      
+
+
       &:not(:last-child) {
         margin-right: 0;
         margin-bottom: 10px;
@@ -293,7 +314,7 @@
     top: 15px;
   }
 
-  .chat-item:hover > .chat-item-delete {
+  .chat-item:hover>.chat-item-delete {
     opacity: 0.5;
     right: 5px;
   }
@@ -380,7 +401,7 @@
   }
 }
 
-.chat-message-user > .chat-message-container {
+.chat-message-user>.chat-message-container {
   align-items: flex-end;
 }
 
@@ -438,7 +459,7 @@
   }
 }
 
-.chat-message-user > .chat-message-container > .chat-message-item {
+.chat-message-user>.chat-message-container>.chat-message-item {
   background-color: var(--second);
 }
 
@@ -508,6 +529,7 @@
 
       @include single-line();
     }
+
     .hint-content {
       font-size: 12px;
 
