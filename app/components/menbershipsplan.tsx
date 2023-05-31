@@ -24,6 +24,9 @@ import { isWebApp } from "./iswapapp";
 import ControlledAccordions from "./aboutus";
 import { isUserLogin } from "../api/restapi/authuser";
 import MySnackbar from "./mysnackbar";
+import mixpanel from "mixpanel-browser";
+
+mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 
 const theme = createTheme({
   palette: {
@@ -116,6 +119,12 @@ function Pricing() {
     const productTitle = membershipOptions[selectedMembershipOption].title;
     const productPrice = membershipOptions[selectedMembershipOption].price;
     console.log(productId, productTitle, productPrice);
+    mixpanel.track("去支付", {
+      用户名: user_id,
+      支付方式: selectedMembershipOption,
+      会员选项: productTitle,
+      会员价格: productPrice,
+    });
     const config = {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_JWT_TOKEN}`,
