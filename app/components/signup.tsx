@@ -199,6 +199,7 @@ export default function SignUp() {
           setMessage("注册成功");
           setSeverity("success");
           localStorage.setItem("service_count", "10");
+
           mixpanel.track("Signed Up", {
             "Signup Type": "Referral",
           });
@@ -363,6 +364,7 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
+              onClick={() => gtag_report_conversion("")}
               sx={{ mt: 3, mb: 2 }}
             >
               提交注册

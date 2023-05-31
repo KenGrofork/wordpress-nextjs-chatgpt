@@ -42,7 +42,32 @@ export default function RootLayout({
           rel="stylesheet"
         ></link> */}
         <script src="/serviceWorkerRegister.js" defer></script>
-        <script src="/google-ads.js" async></script>
+
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-11170461037"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'AW-11170461037');
+      `,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            <!-- Event snippet for 用户提交注册 conversion page -->
+            <script>
+              gtag('event', 'conversion', {'send_to': 'AW-11170461037/GkOGCPLnoaYYEO3qvs4p'});
+            </script>            
+      `,
+          }}
+        />
       </head>
       <body>{children}</body>
     </html>
