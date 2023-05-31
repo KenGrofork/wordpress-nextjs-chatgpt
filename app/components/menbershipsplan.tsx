@@ -46,7 +46,7 @@ const theme = createTheme({
 const membershipOptions = [
   {
     title: "周会员",
-    price: 0.1,
+    price: 14.9,
     description: "¥2/天.",
     buttonColor: "primary",
     buttonText: "加入会员",
@@ -55,7 +55,7 @@ const membershipOptions = [
   },
   {
     title: "月度会员",
-    price: 0.2,
+    price: 29.8,
     description: "¥2/天.",
     buttonColor: "secondary",
     buttonText: "加入会员",
@@ -64,7 +64,7 @@ const membershipOptions = [
   },
   {
     title: "季度会员",
-    price: 0.3,
+    price: 59.8,
     description: "¥2/天.",
     buttonColor: "primary",
     buttonText: "加入会员",
@@ -73,12 +73,12 @@ const membershipOptions = [
   },
   {
     title: "永久会员",
-    price: 0.2,
+    price: 199,
     description: "¥2/天.",
     buttonColor: "primary",
     buttonText: "加入会员",
     id: 321,
-    lenth: "年",
+    lenth: "-",
   },
 ];
 function Pricing() {
