@@ -241,6 +241,9 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             用户注册
           </Typography>
+          <Typography variant="subtitle1">
+            现在注册可获得免费使用权益
+          </Typography>
           <Box
             component="form"
             noValidate
