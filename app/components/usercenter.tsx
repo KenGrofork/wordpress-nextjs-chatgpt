@@ -21,6 +21,7 @@ import { getMenberInfo, getUserInfo } from "../api/restapi/restapi";
 import { isUserLogin } from "../api/restapi/authuser";
 import getServiceCount from "../api/restapi/servicecount";
 import { isMember } from "../api/restapi/ismember";
+import ShareComponent from "./share";
 
 const UserInfo = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -48,6 +49,8 @@ const UserCenter = () => {
   const [progress, setProgress] = React.useState(0);
   //调用后端接口获取用户信息
   const [username, setUsername] = useState("");
+  const [shareLink, setShareLink] = useState("");
+  const [sharecode, setSharecode] = useState("");
   //调用isuserlogin函数判断用户是否登录，未登录跳转到登录页面
   React.useEffect(() => {
     isMember();
@@ -59,17 +62,18 @@ const UserCenter = () => {
     } else {
       fetchData1();
       fetchData2();
-      const serviceInfo = getServiceCount();
-      console.log(serviceInfo);
+      getServiceCount();
     }
     async function fetchData1() {
       const myuserInfo = await getUserInfo();
-      console.log("测试一下");
       setUsername(myuserInfo.name);
+      setSharecode(myuserInfo.name);
+      setShareLink(
+        `https://gpt.funny-code.top/#/signup?sharecode=${myuserInfo.name}`,
+      );
     }
     async function fetchData2() {
-      const memberInfo = await getMenberInfo();
-      console.log(memberInfo);
+      getMenberInfo();
     }
   }, []);
 
@@ -82,7 +86,7 @@ const UserCenter = () => {
         const diff = Math.random() * 1;
         return Math.min(oldProgress + diff, 100);
       });
-    }, 500);
+    }, 100);
 
     return () => {
       clearInterval(timer);
@@ -130,37 +134,40 @@ const UserCenter = () => {
           </div>
         </div>
       </div>
-      <StyledContainer maxWidth="md">
-        <UserInfo>
-          <Avatar alt="User Avatar" src="/path/to/avatar.jpg" />
-          <Typography variant="h6" component="div" marginLeft={2}>
-            User_{username}
-          </Typography>
-        </UserInfo>
-        <ProgressContainer>
+      <StyledContainer maxWidth="md" style={{ overflowY: "auto" }}>
+        <StyledContainer maxWidth="md">
+          <UserInfo>
+            <Avatar alt="User Avatar" src="/path/to/avatar.jpg" />
+            <Typography variant="h6" component="div" marginLeft={2}>
+              User_{username}
+            </Typography>
+          </UserInfo>
+          {/* <ProgressContainer>
           <Typography variant="body1">到期时间</Typography>
           <Box sx={{ width: "60%" }}>
             <LinearProgress variant="determinate" value={progress} />
           </Box>
           <Typography variant="body1">剩余13天</Typography>
-        </ProgressContainer>
-        <DataGridDemo />
-        <Grid item>
-          <Button
-            size="large"
-            color="primary"
-            variant="contained"
-            onClick={handleLogout}
-          >
-            退出登录
-          </Button>
-        </Grid>
-        <MySnackbar
-          open={open}
-          handleClose={handleClose}
-          severity={severity}
-          message={message}
-        />
+        </ProgressContainer> */}
+          <DataGridDemo />
+          <ShareComponent shareLink={shareLink} shareCode={sharecode} />
+          <Grid item sx={{ mt: 10 }}>
+            <Button
+              size="large"
+              color="primary"
+              variant="contained"
+              onClick={handleLogout}
+            >
+              退出登录
+            </Button>
+          </Grid>
+          <MySnackbar
+            open={open}
+            handleClose={handleClose}
+            severity={severity}
+            message={message}
+          />
+        </StyledContainer>
       </StyledContainer>
     </ThemeProvider>
   );

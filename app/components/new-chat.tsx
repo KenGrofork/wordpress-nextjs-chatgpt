@@ -54,12 +54,12 @@ function MaskItem(props: { mask: Mask; onClick?: () => void }) {
 
   return (
     <div className={styles["mask"]} ref={domRef} onClick={props.onClick}>
-      <img
+      {/* <img
         src={ChatGptIcon1.src}
         alt="ChatGptIcon1"
         className={styles["site-logo1"]}
-      />
-      {/* <MaskAvatar mask={props.mask} /> */}
+      /> */}
+      <MaskAvatar mask={props.mask} />
       <div className={styles["mask-name"] + " one-line"}>{props.mask.name}</div>
     </div>
   );
@@ -82,10 +82,10 @@ function useMaskGroup(masks: Mask[]) {
     let maskIndex = 0;
     const nextMask = () => masks[maskIndex++ % masks.length];
 
-    // const rows = Math.ceil(maxHeight / maskItemHeight);
-    const rows = 1;
-    // const cols = Math.ceil(maxWidth / maskItemWidth);
-    const cols = 12;
+    const rows = Math.ceil(maxHeight / maskItemHeight);
+    // const rows = 1;
+    const cols = Math.ceil(maxWidth / maskItemWidth);
+    // const cols = 12;
 
     const newGroups = new Array(rows)
       .fill(0)

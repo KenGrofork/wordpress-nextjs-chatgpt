@@ -80,7 +80,7 @@ export default function ControlledAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            是的，你可以随时给我们的客服留言或者直接添加客服微信进行咨询，客服微信见右下角.
+            是的，你可以随时给我们的客服留言或者直接添加客服微信进行咨询，客服微信：zyt757620782.
           </Typography>
         </AccordionDetails>
       </Accordion>

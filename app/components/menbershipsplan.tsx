@@ -72,7 +72,7 @@ const membershipOptions = [
     lenth: "三个月",
   },
   {
-    title: "年度会员",
+    title: "永久会员",
     price: 0.2,
     description: "¥2/天.",
     buttonColor: "primary",

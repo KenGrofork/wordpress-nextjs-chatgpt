@@ -47,3 +47,16 @@ export async function getUserInfo() {
     console.error(error);
   }
 }
+
+export async function sendInviteCode(invite_code: string) {
+  const user_id = localStorage.getItem("user_info");
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/invite/v1/check?user_id=${user_id}&invite_code=${invite_code}`,
+    );
+    // console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}

@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -19,6 +19,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { isUserLogin } from "../api/restapi/authuser";
 import mixpanel from "mixpanel-browser";
+import { sendInviteCode } from "../api/restapi/restapi";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -67,6 +68,18 @@ export default function SignUp() {
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success");
   const [showPassword, setShowPassword] = useState(true);
+  const [invitecode, setInvitecode] = useState("");
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const shareCode = searchParams.get("sharecode");
+
+  React.useEffect(() => {
+    if (shareCode) {
+      console.log("sharecode:", shareCode);
+
+      setInvitecode(shareCode);
+    }
+  }, [shareCode]);
 
   const handleClose = (
     _event?: React.SyntheticEvent | Event,
@@ -179,6 +192,9 @@ export default function SignUp() {
         console.log(tokenResponse);
         localStorage.setItem("jwt_token", tokenResponse.data.token);
         if (tokenResponse.data.token) {
+          if (invitecode != "") {
+            sendInviteCode(invitecode);
+          }
           setOpen(true);
           setMessage("注册成功");
           setSeverity("success");
@@ -311,6 +327,32 @@ export default function SignUp() {
                       </InputAdornment>
                     ),
                   }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  // required
+                  fullWidth
+                  name="password"
+                  label="邀请码[选填]"
+                  type={showPassword ? "text" : "password"} // 控制密码是否显示
+                  id="password"
+                  autoComplete="new-password"
+                  value={invitecode}
+                  onChange={(e) => setInvitecode(e.target.value)}
+                  // InputProps={{
+                  //   endAdornment: (
+                  //     <InputAdornment position="end">
+                  //       <IconButton
+                  //         aria-label="toggle password visibility"
+                  //         onClick={() => setShowPassword(!showPassword)}
+                  //         onMouseDown={(e) => e.preventDefault()}
+                  //       >
+                  //         {showPassword ? <Visibility /> : <VisibilityOff />}
+                  //       </IconButton>
+                  //     </InputAdornment>
+                  //   ),
+                  // }}
                 />
               </Grid>
             </Grid>
