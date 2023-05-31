@@ -37,7 +37,7 @@ const ProgressContainer = styled(Box)(({ theme }) => ({
 }));
 
 const StyledContainer = styled(Container)(({ theme }) => ({
-  padding: theme.spacing(4),
+  padding: theme.spacing(1),
 }));
 
 const UserCenter = () => {
