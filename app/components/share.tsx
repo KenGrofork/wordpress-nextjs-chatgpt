@@ -40,12 +40,18 @@ const ShareComponent = ({ shareLink, shareCode }: ShareComponentProps) => {
   };
 
   return (
-    <Grid container direction={{ xs: "column", sm: "row" }} sx={{ mt: 8 }}>
-      <Grid item xs={12} sm={6} sx={{ mt: 8 }}>
+    <Grid
+      container
+      direction={{ xs: "column", sm: "row" }}
+      sx={{ mt: 8 }}
+      spacing={2}
+    >
+      <Grid item xs={12} sm={5} sx={{ mt: 8 }}>
         <Box sx={{ mt: 3 }}>
           <Typography variant="h5">分享得会员</Typography>
           <TextField
             sx={{ mt: 3 }}
+            fullWidth
             label="分享链接"
             value={shareLink}
             id="code"
@@ -68,6 +74,7 @@ const ShareComponent = ({ shareLink, shareCode }: ShareComponentProps) => {
         <Box sx={{ mt: 3 }}>
           <TextField
             label="分享码"
+            fullWidth
             value={shareCode}
             id="code"
             InputProps={{
@@ -88,12 +95,9 @@ const ShareComponent = ({ shareLink, shareCode }: ShareComponentProps) => {
         </Box>
         <Box sx={{ mt: 3 }}>
           <QRCode value={shareLink} />
-          <Button onClick={() => copyToClipboard(shareLink)}>
-            复制分享二维码
-          </Button>
         </Box>
       </Grid>
-      <Grid item xs={12} sm={6} sx={{ mt: 8 }}>
+      <Grid item xs={12} sm={7} sx={{ mt: 8 }}>
         <Box sx={{ mt: 3 }}>
           <Typography variant="subtitle1">分享说明</Typography>
         </Box>
@@ -135,41 +139,6 @@ const ShareComponent = ({ shareLink, shareCode }: ShareComponentProps) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        {/* <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel3bh-content"
-                        id="panel3bh-header"
-                    >
-                        <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                            Advanced settings
-                        </Typography>
-                        <Typography sx={{ color: 'text.secondary' }}>
-                            Filtering has been entirely disabled for whole web server
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                            amet egestas eros, vitae egestas augue. Duis vel est augue.
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel4bh-content"
-                        id="panel4bh-header"
-                    >
-                        <Typography sx={{ width: '33%', flexShrink: 0 }}>Personal data</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit
-                            amet egestas eros, vitae egestas augue. Duis vel est augue.
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion> */}
       </Grid>
     </Grid>
   );
