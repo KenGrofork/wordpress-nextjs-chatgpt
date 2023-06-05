@@ -364,7 +364,6 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={() => gtag_report_conversion("")}
               sx={{ mt: 3, mb: 2 }}
             >
               提交注册
