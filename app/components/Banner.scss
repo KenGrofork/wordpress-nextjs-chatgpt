@@ -1,0 +1,32 @@
+.banner {
+    background-image: linear-gradient(135deg, #2196f3 0%, #f44336 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-image: url('https://www.transparenttextures.com/patterns/diagonal-striped-brick.png'); */
+    opacity: 0.1;
+  }
+  
+  .banner-title {
+    animation: slideIn 1s ease-in-out;
+    margin: 0;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  

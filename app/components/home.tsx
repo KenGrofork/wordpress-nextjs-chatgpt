@@ -53,15 +53,13 @@ const MaskPage = dynamic(async () => (await import("./mask")).MaskPage, {
   loading: () => <Loading noLogo />,
 });
 
-// const Login = dynamic(async () => (await import("./login")).Login, {
-//   loading: () => <Loading noLogo />,
-// });
 const Login = dynamic(
   async () => (await import("./loginandregisiter")).default,
   {
     loading: () => <Loading noLogo />,
   },
 );
+
 const Pricing = dynamic(
   async () => (await import("./menbershipsplan")).default,
   {
@@ -72,12 +70,10 @@ const Pricing = dynamic(
 const UserCenter = dynamic(async () => (await import("./usercenter")).default, {
   loading: () => <Loading noLogo />,
 });
+
 const SignUp = dynamic(async () => (await import("./signup")).default, {
   loading: () => <Loading noLogo />,
 });
-// const HomePage = dynamic(async () => (await import("./promptcard")).default, {
-//   loading: () => <Loading noLogo />,
-// });
 
 export function useSwitchTheme() {
   const config = useAppConfig();
@@ -155,7 +151,7 @@ function Screen() {
 
       <div className={styles["window-content"]} id={SlotID.AppBody}>
         <Routes>
-          <Route path={Path.Home} element={<Chat />} />
+          <Route path={Path.Home} element={<NewChat />} />
           <Route path={Path.NewChat} element={<NewChat />} />
           <Route path={Path.Masks} element={<MaskPage />} />
           <Route path={Path.Chat} element={<Chat />} />

@@ -3,7 +3,7 @@ import { BuiltinMask } from "./typing";
 export const EN_MASKS: BuiltinMask[] = [
   {
     avatar: "1f47e",
-    name: "GitHub Copilot",
+    name: "GitHub Copilot代码提示",
     context: [
       {
         role: "system",
@@ -66,7 +66,7 @@ export const EN_MASKS: BuiltinMask[] = [
   },
   {
     avatar: "2328-fe0f",
-    name: "CAN",
+    name: "CAN编码专家",
     context: [
       {
         role: "user",
@@ -89,7 +89,7 @@ export const EN_MASKS: BuiltinMask[] = [
   },
   {
     avatar: "1f60e",
-    name: "Expert",
+    name: "Expert提示词工程师",
     context: [
       {
         role: "user",

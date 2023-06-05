@@ -208,6 +208,8 @@ import Locale from "../locales";
 import { useAppConfig, useChatStore } from "../store";
 import { MaskAvatar } from "./mask";
 import { useCommand } from "./command";
+import Banner from "./banner";
+import { Grid } from "@mui/material";
 
 function getIntersectionArea(aRect: DOMRect, bRect: DOMRect) {
   const xmin = Math.max(aRect.x, bRect.x);
@@ -330,6 +332,7 @@ export function NewChat() {
           ></IconButton>
         )}
       </div>
+      <Banner />
       <div className={styles["mask-cards"]}>
         <div className={styles["mask-card"]}>
           <EmojiAvatar avatar="1f606" size={24} />
