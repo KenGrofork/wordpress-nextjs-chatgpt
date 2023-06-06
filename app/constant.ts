@@ -17,7 +17,6 @@ export enum Path {
   UserCenter = "/usercenter",
   SiunUp = "/signup",
   Pricing = "/pricing",
-  // HomePage = "/home",
 }
 
 export enum SlotID {

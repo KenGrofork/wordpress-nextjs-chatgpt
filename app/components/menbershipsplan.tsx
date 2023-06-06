@@ -332,7 +332,7 @@ function Pricing() {
                 borderRadius: "5px",
                 cursor: "pointer",
                 border:
-                  SelectedPaymentMethod === "wechat" ? "1px solid #000" : "",
+                  SelectedPaymentMethod === "wechat" ? "2px solid #000" : "",
               }}
               onClick={() => {
                 setSelectedPaymentMethod("wechat");
@@ -371,7 +371,7 @@ function Pricing() {
                 borderRadius: "5px",
                 cursor: "pointer",
                 border:
-                  SelectedPaymentMethod === "alipay" ? "1px solid #000" : "",
+                  SelectedPaymentMethod === "alipay" ? "2px solid #000" : "",
               }}
               onClick={() => {
                 setSelectedPaymentMethod("alipay");
