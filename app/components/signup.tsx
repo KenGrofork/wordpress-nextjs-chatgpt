@@ -204,6 +204,7 @@ export default function SignUp() {
 
           mixpanel.track("Signed Up", {
             "Signup Type": "Referral",
+            "phone number": username,
           });
           setTimeout(() => {
             navigate("/");
