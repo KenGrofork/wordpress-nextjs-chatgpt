@@ -50,22 +50,11 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          
-            gtag('config', 'AW-11170461037');
-      `,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            <!-- Event snippet for 用户提交注册 conversion page -->
-            <script>
-              gtag('event', 'conversion', {'send_to': 'AW-11170461037/GkOGCPLnoaYYEO3qvs4p'});
-            </script>            
-      `,
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'AW-11170461037');
+              `,
           }}
         />
       </head>

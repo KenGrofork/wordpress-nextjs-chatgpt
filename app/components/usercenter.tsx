@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -19,9 +19,9 @@ import { ThemeProvider } from "@emotion/react";
 import DataGridDemo from "./orderlist";
 import { getMenberInfo, getUserInfo } from "../api/restapi/restapi";
 import { isUserLogin } from "../api/restapi/authuser";
-import getServiceCount from "../api/restapi/servicecount";
 import { isMember } from "../api/restapi/ismember";
 import ShareComponent from "./share";
+// import CrispChat from "./crispchat";
 
 const UserInfo = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -51,6 +51,21 @@ const UserCenter = () => {
   const [username, setUsername] = useState("");
   const [shareLink, setShareLink] = useState("");
   const [sharecode, setSharecode] = useState("");
+  // const [CrispChat, setCrispChat] = useState<React.ComponentType | null>(null);
+
+  // useEffect(() => {
+  //   const loadCrispChat = async () => {
+  //     const CrispChatComponent = await dynamic(() => import('./crispchat'), { ssr: false });
+  //     setCrispChat(() => CrispChatComponent);
+  //   };
+
+  //   loadCrispChat();
+
+  //   return () => {
+  //     setCrispChat(null);
+  //   };
+  // }, []);
+
   //调用isuserlogin函数判断用户是否登录，未登录跳转到登录页面
   React.useEffect(() => {
     isMember();
@@ -161,6 +176,7 @@ const UserCenter = () => {
               退出登录
             </Button>
           </Grid>
+          {/* <CrispChat /> */}
           <MySnackbar
             open={open}
             handleClose={handleClose}

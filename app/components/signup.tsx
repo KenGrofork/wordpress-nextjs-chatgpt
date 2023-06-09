@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { isUserLogin } from "../api/restapi/authuser";
 import mixpanel from "mixpanel-browser";
 import { sendInviteCode } from "../api/restapi/restapi";
+import { gtag_report_conversion } from "./gtagConversion";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -197,6 +198,7 @@ export default function SignUp() {
           }
           setOpen(true);
           setMessage("注册成功");
+          gtag_report_conversion("https://gpt.funny-code.top");
           setSeverity("success");
           localStorage.setItem("service_count", "10");
 

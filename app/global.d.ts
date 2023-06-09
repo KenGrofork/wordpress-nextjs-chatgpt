@@ -9,3 +9,11 @@ declare module "*.scss" {
 }
 
 declare module "*.svg";
+declare global {
+  interface Window {
+    $crisp: any;
+    CRISP_WEBSITE_ID: string;
+  }
+}
+
+export {};
