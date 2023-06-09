@@ -491,12 +491,22 @@ export function Chat() {
   const [freeshow, setFreeshow] = useState(false);
 
   useEffect(() => {
-    isMember();
+    // isMember();
+    async function fetchMemberInfo() {
+      try {
+        const result = await isMember();
+        console.log(result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchMemberInfo();
     const isfree = localStorage.getItem("service_count");
     console.log(isfree);
     const ismember = localStorage.getItem("ismember");
     if (ismember === "false" && isfree != "0") {
-      setFreeleft(`免费试用次数剩余：${isfree}次.`);
+      setFreeleft(`免费试用次数剩余：${isfree}次  `);
       setFreeshow(true);
     } else {
       setFreeshow(false);
@@ -543,7 +553,7 @@ export function Chat() {
     const res = await getServiceCount();
     console.log(res);
     if (ismember === "false" && isfree != "0") {
-      setFreeleft(`免费试用次数剩余：${res.service_count}次.`);
+      setFreeleft(`免费试用次数剩余：${res.service_count}次`);
       setFreeshow(true);
     } else {
       setFreeshow(false);
@@ -793,18 +803,19 @@ export function Chat() {
           >
             <div className="window-header-sub-title">
               <text style={{ fontSize: "14px" }}>{freeleft}</text>
+              <Link
+                style={{ fontSize: "14px" }}
+                component="button"
+                variant="overline"
+                align="center"
+                justifyContent="center"
+                onClick={() => {
+                  navigate(Path.Pricing);
+                }}
+              >
+                开通会员{">"}
+              </Link>
             </div>
-            <Link
-              component="button"
-              variant="overline"
-              align="center"
-              justifyContent="center"
-              onClick={() => {
-                navigate(Path.Pricing);
-              }}
-            >
-              开通会员{">"}
-            </Link>
           </div>
         )}
         {messages.map((message, i) => {

@@ -43,10 +43,10 @@ const ShareComponent = ({ shareLink, shareCode }: ShareComponentProps) => {
     <Grid
       container
       direction={{ xs: "column", sm: "row" }}
-      sx={{ mt: 8 }}
+      sx={{ mt: 2 }}
       spacing={2}
     >
-      <Grid item xs={12} sm={5} sx={{ mt: 8 }}>
+      <Grid item xs={12} sm={5} sx={{ mt: 2 }}>
         <Box sx={{ mt: 3 }}>
           <Typography variant="h5">分享得会员</Typography>
           <TextField

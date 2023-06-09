@@ -282,7 +282,7 @@ function Pricing() {
                     cursor: "pointer",
                     border:
                       selectedMembershipOption === index
-                        ? "1px solid #000"
+                        ? "2px solid #000"
                         : "",
                   }}
                   onClick={() => setSelectedMembershipOption(index)}

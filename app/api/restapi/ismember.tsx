@@ -5,6 +5,7 @@ export async function isMember() {
   const ismember = await getMenberInfo();
   if (ismember.length > 0) {
     localStorage.setItem("ismember", "true");
+    console.log("ismember", ismember);
     return true;
   }
   localStorage.setItem("ismember", "false");

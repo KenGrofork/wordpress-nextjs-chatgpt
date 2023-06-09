@@ -62,7 +62,7 @@ const UserCenter = () => {
     } else {
       fetchData1();
       fetchData2();
-      getServiceCount();
+      // getServiceCount();
     }
     async function fetchData1() {
       const myuserInfo = await getUserInfo();
@@ -151,7 +151,7 @@ const UserCenter = () => {
         </ProgressContainer> */}
           <DataGridDemo />
           <ShareComponent shareLink={shareLink} shareCode={sharecode} />
-          <Grid item sx={{ mt: 10 }}>
+          <Grid item sx={{ mt: 5 }}>
             <Button
               size="large"
               color="primary"
