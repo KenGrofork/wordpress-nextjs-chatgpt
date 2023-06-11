@@ -24,6 +24,19 @@ import { gtag_report_conversion } from "./gtagConversion";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
+const themeWithGlobalStyles = createTheme({
+  ...defaultTheme,
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        html, body {
+          height: 100%;
+          overflow: auto;
+        }
+      `,
+    },
+  },
+});
 mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 
 export default function SignUp() {
@@ -227,12 +240,18 @@ export default function SignUp() {
 
   //返回组件
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={themeWithGlobalStyles}>
       <DefaultHeader />
-      <Container component="main" maxWidth="xs">
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{ maxHeight: "100vh", overflow: "auto" }}
+      >
         <CssBaseline />
         <Box
           sx={{
+            // overflow: "auto",
+            // height: "100vh",
             marginTop: 8,
             display: "flex",
             flexDirection: "column",

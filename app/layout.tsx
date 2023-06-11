@@ -42,7 +42,6 @@ export default function RootLayout({
           rel="stylesheet"
         ></link> */}
         <script src="/serviceWorkerRegister.js" defer></script>
-
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=AW-11170461037"
@@ -50,6 +49,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+            
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
