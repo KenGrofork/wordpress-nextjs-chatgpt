@@ -97,7 +97,15 @@ const membershipOptions = [
 
 function Pricing() {
   const [ismoble, setismobile] = React.useState(false);
+  const [isphone, setisphone] = React.useState(false);
+
   React.useEffect(() => {
+    const isPhone = /Mobile|(Android|iPhone).+Mobile/.test(
+      window.navigator.userAgent,
+    );
+    if (isPhone) {
+      setisphone(true);
+    }
     const isMobileDevice =
       /Mobile|(Android|iPhone).+Mobile/.test(window.navigator.userAgent) &&
       !/MicroMessenger/.test(window.navigator.userAgent);
@@ -498,7 +506,7 @@ function Pricing() {
             </Grid>
           </Grid>
         )}
-        {ismoble && (
+        {isphone && (
           <div
             style={{
               display: "flex",
