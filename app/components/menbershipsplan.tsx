@@ -8,6 +8,7 @@ import {
   CardContent,
   Box,
   Chip,
+  Paper,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +30,7 @@ import mixpanel from "mixpanel-browser";
 import Banner3 from "./banner3";
 import CountDown from "./countdown";
 import AlertDialog from "./popup";
+import { Padding } from "@mui/icons-material";
 
 mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 
@@ -464,31 +466,89 @@ function Pricing() {
             </Card>
           </Grid>
         </Grid>
-        <Grid item xs={6} sx={{ mb: 3 }}>
-          <Grid container justifyContent="right">
+        {!ismoble && (
+          <Grid item xs={6} sx={{ mb: 3 }}>
             <Grid container justifyContent="right">
-              <Typography variant="h6" align="right" sx={{ mb: 1, mt: 1 }}>
-                订单合计：{membershipOptions[selectedMembershipOption].price}元
-              </Typography>
-            </Grid>
-            <Grid container justifyContent="right">
-              <Typography variant="inherit" align="right" sx={{ mb: 1, mt: 0 }}>
-                当前选择：{membershipOptions[selectedMembershipOption].title}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                size="large"
-                color="primary"
-                variant="contained"
-                startIcon={<PaymentIcon />}
-                onClick={handleSubmit}
-              >
-                去支付
-              </Button>
+              <Grid container justifyContent="right">
+                <Typography variant="h6" align="right" sx={{ mb: 1, mt: 1 }}>
+                  订单合计：{membershipOptions[selectedMembershipOption].price}
+                  元
+                </Typography>
+              </Grid>
+              <Grid container justifyContent="right">
+                <Typography
+                  variant="inherit"
+                  align="right"
+                  sx={{ mb: 1, mt: 0 }}
+                >
+                  当前选择：{membershipOptions[selectedMembershipOption].title}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  size="large"
+                  color="primary"
+                  variant="contained"
+                  startIcon={<PaymentIcon />}
+                  onClick={handleSubmit}
+                >
+                  去支付
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        )}
+        {ismoble && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Paper
+              sx={{ position: "fixed", bottom: 0, width: "100%", zIndex: 9999 }}
+            >
+              <Box p={2}>
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Grid item xs={8}>
+                    <Typography
+                      variant="subtitle1"
+                      align="right"
+                      sx={{ mb: 0 }}
+                    >
+                      订单合计：
+                      {membershipOptions[selectedMembershipOption].price}元
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      align="right"
+                      sx={{ mb: 0 }}
+                    >
+                      当前选择：
+                      {membershipOptions[selectedMembershipOption].title}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      size="large"
+                      color="primary"
+                      variant="contained"
+                      startIcon={<PaymentIcon />}
+                      onClick={handleSubmit}
+                    >
+                      去支付
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Paper>
+          </div>
+        )}
         <Divider sx={{ mb: 3 }} />
 
         {loading && (
