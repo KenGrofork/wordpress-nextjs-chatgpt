@@ -1,5 +1,5 @@
 
-基于https://github.com/Yidadaa/ChatGPT-Next-Web开源项目二次开发
+基于https://github.com/Yidadaa/ChatGPT-Next-Web 开源项目二次开发
 ## 主要功能
 - 在后端使用基于PHP+mysql+apache的Wordpress restAPI提供用户，会员，订单，支付等接口服务
 - 在 1 分钟内使用 Vercel **免费一键部署**
