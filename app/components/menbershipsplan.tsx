@@ -347,7 +347,6 @@ function Pricing() {
                       }}
                     >
                       {option.price ? `¥${option.regularprice}` : `Contact`}
-                      <span>/{option.lenth}</span>
                     </Typography>
                   </CardContent>
                 </Card>
