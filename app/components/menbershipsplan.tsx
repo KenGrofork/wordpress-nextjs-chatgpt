@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   Box,
+  Chip,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +26,8 @@ import ControlledAccordions from "./aboutus";
 import { isUserLogin } from "../api/restapi/authuser";
 import MySnackbar from "./mysnackbar";
 import mixpanel from "mixpanel-browser";
+import Banner3 from "./banner3";
+import CountDown from "./countdown";
 
 mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 
@@ -55,6 +58,7 @@ const membershipOptions = [
     buttonText: "加入会员",
     id: 99,
     lenth: "周",
+    regularprice: "24.9",
   },
   {
     title: "月度会员",
@@ -64,6 +68,7 @@ const membershipOptions = [
     buttonText: "加入会员",
     id: 319,
     lenth: "月",
+    regularprice: "38.9",
   },
   {
     title: "季度会员",
@@ -73,6 +78,7 @@ const membershipOptions = [
     buttonText: "加入会员",
     id: 320,
     lenth: "三个月",
+    regularprice: "79.9",
   },
   {
     title: "永久会员",
@@ -82,6 +88,7 @@ const membershipOptions = [
     buttonText: "加入会员",
     id: 321,
     lenth: "-",
+    regularprice: "299.9",
   },
 ];
 function Pricing() {
@@ -104,7 +111,7 @@ function Pricing() {
     React.useState("wechat");
   const [transpayment, setTranspayment] = React.useState("微信");
   const [selectedMembershipOption, setSelectedMembershipOption] =
-    React.useState(0);
+    React.useState(1);
   const user_id = localStorage.getItem("user_info");
   const [order_id, setOrder_id] = React.useState(
     localStorage.getItem("current_order_id"),
@@ -260,9 +267,18 @@ function Pricing() {
           </div>
         </div>
       </div>
-      <Container maxWidth="lg" sx={{ mt: 4, overflow: "auto" }}>
-        <Typography variant="h6" align="left" sx={{ mb: 3 }}>
-          选择一个会员加入我们
+
+      <Container maxWidth="lg" sx={{ mt: 2, overflow: "auto" }}>
+        <Banner3 />
+        <Typography variant="h6" align="left" sx={{ mb: 3, mt: 1 }}>
+          选择会员
+          <Typography
+            component="span"
+            variant="h6"
+            sx={{ fontSize: "0.8rem", color: "gray" }}
+          >
+            （已有6000+用户开通）
+          </Typography>
         </Typography>
         <Grid
           container
@@ -280,6 +296,7 @@ function Pricing() {
                     boxShadow: "0px 0px 2px 0px rgba(0, 0, 0, 0.4)",
                     borderRadius: "5px",
                     cursor: "pointer",
+                    position: "relative",
                     border:
                       selectedMembershipOption === index
                         ? "2px solid #000"
@@ -293,6 +310,22 @@ function Pricing() {
                         selectedMembershipOption === index ? "#f48fb1" : "",
                     }}
                   >
+                    {index === 1 && (
+                      <Chip
+                        label="推荐"
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          right: 0,
+                          backgroundColor: "red",
+                          color: "white",
+                          borderRadius: "0 0 0 10px", // Add this line to create a tag-like shape
+                          borderTopLeftRadius: 0, // Add this line to create a tag-like shape
+                          padding: "1px 1px", // Adjust padding for a more tag-like appearance
+                          fontSize: "0.8rem", // Adjust font size if needed
+                        }}
+                      />
+                    )}
                     <Typography
                       variant="subtitle2"
                       align="center"
@@ -300,12 +333,20 @@ function Pricing() {
                     >
                       {option.title}
                     </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      align="center"
-                      sx={{ mb: 0 }}
-                    >
+                    <Typography variant="h6" align="center" sx={{ mb: 0 }}>
                       {option.price ? `¥${option.price}` : `Contact`}
+                      <span>/{option.lenth}</span>
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      align="center"
+                      sx={{
+                        mb: 0,
+                        textDecoration: "line-through",
+                        color: "gray",
+                      }}
+                    >
+                      {option.price ? `¥${option.regularprice}` : `Contact`}
                       <span>/{option.lenth}</span>
                     </Typography>
                   </CardContent>
