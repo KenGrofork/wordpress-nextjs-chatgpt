@@ -18,7 +18,7 @@ export default function ControlledAccordions() {
   return (
     <Box
       sx={{
-        mb: 3,
+        mb: 10,
         mt: 1,
         // "@media (max-width: 600px)": {
         //   maxHeight: "50vh",
