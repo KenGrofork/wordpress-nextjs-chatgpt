@@ -4,7 +4,7 @@ import React from "react";
 
 const { Countdown } = Statistic;
 
-const deadline = Date.now() + 1000 * 60 * 60 * 8 + 1000 * 3; // Dayjs is also OK
+const deadline = Date.now() + 1000 * 60 * 60 * 2 + 1000 * 3; // Dayjs is also OK
 
 const onFinish: CountdownProps["onFinish"] = () => {
   console.log("finished!");
