@@ -21,6 +21,7 @@ import dynamic from "next/dynamic";
 import { isUserLogin } from "../api/restapi/authuser";
 import BasicList from "./sidebarlist";
 import { Divider } from "@mui/material";
+import Banner2 from "./banner2";
 
 const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
   loading: () => null,
@@ -107,6 +108,7 @@ export function SideBar(props: { className?: string }) {
             onClick={() => navigate(Path.Home)}
           />
         </div>
+        <Banner2 />
         {/* <div className={styles["sidebar-title"]}>AIChat</div> */}
         {/* <div className={styles["sidebar-sub-title"]}>
           国内能用的ChatGPT，目前接入gpt3.5.
