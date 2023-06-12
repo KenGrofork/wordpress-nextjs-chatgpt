@@ -28,6 +28,7 @@ import MySnackbar from "./mysnackbar";
 import mixpanel from "mixpanel-browser";
 import Banner3 from "./banner3";
 import CountDown from "./countdown";
+import AlertDialog from "./popup";
 
 mixpanel.init("6c4c1c926708fd247571a67ed0a25d6f", { debug: true });
 
@@ -91,8 +92,17 @@ const membershipOptions = [
     regularprice: "299.9",
   },
 ];
+
 function Pricing() {
+  const [ismoble, setismobile] = React.useState(false);
   React.useEffect(() => {
+    const isMobileDevice =
+      /Mobile|(Android|iPhone).+Mobile/.test(window.navigator.userAgent) &&
+      !/MicroMessenger/.test(window.navigator.userAgent);
+    if (isMobileDevice) {
+      setismobile(true);
+      setSelectedPaymentMethod("alipay");
+    }
     const res = isUserLogin();
     console.log(res);
     if (!res) {
@@ -355,9 +365,19 @@ function Pricing() {
           })}
         </Grid>
         <Divider sx={{ mb: 3 }} />
-        <Typography variant="h6" align="left" sx={{ mb: 2 }}>
-          选择支付方式
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <Typography variant="h6" align="left">
+            选择支付方式
+          </Typography>
+          {ismoble && <AlertDialog />}
+        </Box>
         <Grid
           container
           spacing={1}
